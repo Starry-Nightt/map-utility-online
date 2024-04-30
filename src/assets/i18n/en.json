@@ -1,0 +1,73 @@
+{
+  "common": {
+    "language": "Language",
+    "success": "Success",
+    "error": "Error",
+    "dashboard": "Dashboard",
+    "title": "Map Online",
+    "404notFound": "Not Found",
+    "home": "Home",
+    "about": "About",
+    "user.account": "User account",
+    "actions": "Actions"
+  },
+  "page": {
+    "home":"Home",
+    "about": "About",
+    "userManagement": "User Management"
+  },
+  "button": {
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit"
+  },
+  "field": {
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "confirmPassword": "Confirm password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "oldPassword": "Old pasword",
+    "newPassword": "New password",
+    "role": "Role"
+
+  },
+  "validator": {
+    "required": "{{fieldName}} is required",
+    "email": "Email should be valid",
+    "pattern": "{{fieldName}} should be valid",
+    "passwordMismatch": "Password should match",
+    "passwordShouldNotMatch": "New password should not match old password"
+  },
+  "placeholder": {
+    "email": "example@gmail.com",
+    "password": "Type your password",
+    "confirmPassword": "Type your confirm password",
+    "firstName": "Paul",
+    "lastName": "Allen",
+    "username": "example.user",
+    "oldPassword": "Type your old pasword",
+    "newPassword": "Type your new password"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "notAMember": "Not a member? ",
+    "alreadyMember": "Already a member? ",
+    "register.success": "Register successfully",
+    "login.success": "Login successfully",
+    "changePassword.success": "Change password successfully",
+    "updateProfile.success": "Update profile successfully"
+  },
+  "usernav": {
+    "profile": "Profile",
+    "changePassword": "Change password",
+    "logout": "Sign Out",
+    "profile.desc": "Your account information",
+    "changePassword.desc": "Security your account",
+    "logout.desc": "Exit from your account",
+    "settings": "Settings"
+  }
+}

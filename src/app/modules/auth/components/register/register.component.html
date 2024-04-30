@@ -1,0 +1,134 @@
+<div class="flex justify-center items-center h-full w-full">
+  <div class="card w-full max-w-xl bg-base-100 shadow-xl py-10 px-8">
+    <h2 class="card-title mb-2 text-3xl uppercase">Sign up</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">{{ "field.email" | translate }}</span>
+        </div>
+        <input
+          type="text"
+          [placeholder]="'placeholder.email' | translate"
+          class="input input-bordered w-full"
+          formControlName="email"
+          name="email"
+        />
+        <app-form-error-message
+          [control]="emailCtrl"
+          [fieldName]="'field.email' | translate"
+        ></app-form-error-message>
+      </label>
+      <div class="flex gap-4">
+        <!-- First name -->
+        <label class="form-control w-full flex-1">
+          <div class="label">
+            <span class="label-text">{{ "field.firstName" | translate }}</span>
+          </div>
+          <input
+            type="text"
+            class="input input-bordered w-full"
+            formControlName="firstName"
+            name="firstName"
+            [placeholder]="'placeholder.firstName' | translate"
+          />
+          <app-form-error-message
+            [control]="firstNameCtrl"
+            [fieldName]="'field.firstName' | translate"
+          ></app-form-error-message>
+        </label>
+        <!-- Last name -->
+        <label class="form-control w-full flex-1">
+          <div class="label">
+            <span class="label-text">{{ "field.lastName" | translate }}</span>
+          </div>
+          <input
+            type="text"
+            class="input input-bordered w-full"
+            formControlName="lastName"
+            name="lastName"
+            [placeholder]="'placeholder.lastName' | translate"
+          />
+          <app-form-error-message
+            [control]="lastNameCtrl"
+            [fieldName]="'field.lastName' | translate"
+          ></app-form-error-message>
+        </label>
+      </div>
+      <!-- Username -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">{{ "field.username" | translate }}</span>
+        </div>
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          formControlName="username"
+          name="username"
+          [placeholder]="'placeholder.username' | translate"
+        />
+        <app-form-error-message
+          [control]="usernameCtrl"
+          [fieldName]="'field.username' | translate"
+        ></app-form-error-message>
+      </label>
+      <!-- Password -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">{{ "field.password" | translate }}</span>
+        </div>
+        <input
+          type="password"
+          [placeholder]="'placeholder.password' | translate"
+          class="input input-bordered w-full"
+          formControlName="password"
+          name="password"
+        />
+        <app-form-error-message
+          [control]="passwordCtrl"
+          [fieldName]="'field.password' | translate"
+        ></app-form-error-message>
+      </label>
+      <!-- Confirm password -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">{{
+            "field.confirmPassword" | translate
+          }}</span>
+        </div>
+        <input
+          type="password"
+          class="input input-bordered w-full"
+          formControlName="confirmPassword"
+          name="confirmPassword"
+          [placeholder]="'placeholder.confirmPassword' | translate"
+        />
+        <app-form-error-message
+          [control]="confirmPasswordCtrl"
+          [fieldName]="'field.confirmPassword' | translate"
+        ></app-form-error-message>
+      </label>
+      <div
+        class="label"
+        *ngIf=" form.errors?.['passwordMismatch'] && passwordCtrl.valid && confirmPasswordCtrl.valid"
+      >
+        <span class="label-text-alt text-red-500 ml-1">{{
+          "validator.passwordMismatch" | translate
+        }}</span>
+      </div>
+      <button
+        class="btn btn-primary uppercase mt-4 w-full"
+        [disabled]="form.invalid"
+        type="submit"
+      >
+        Sign up
+      </button>
+      <div class="mt-3">
+        {{ "auth.alreadyMember" | translate }}
+        <a routerLink="/auth/login" class="link-primary">{{
+          "auth.login" | translate
+        }}</a>
+      </div>
+    </form>
+  </div>
+</div>

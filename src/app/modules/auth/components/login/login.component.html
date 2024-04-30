@@ -1,0 +1,54 @@
+<div class="flex justify-center items-center h-full w-full">
+  <div class="card w-full max-w-lg bg-base-100 shadow-xl p-8">
+    <h2 class="card-title mb-2 text-3xl uppercase">Sign in</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">{{ "field.email" | translate }}</span>
+        </div>
+        <input
+          type="text"
+          [placeholder]="'placeholder.email' | translate"
+          class="input input-bordered w-full"
+          formControlName="email"
+          name="email"
+        />
+        <app-form-error-message
+          [control]="emailCtrl"
+          [fieldName]="'field.email' | translate"
+        ></app-form-error-message>
+      </label>
+      <!-- Password -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">{{ "field.password" | translate }}</span>
+        </div>
+        <input
+          type="password"
+          [placeholder]="'placeholder.password' | translate"
+          class="input input-bordered w-full"
+          formControlName="password"
+          name="password"
+        />
+        <app-form-error-message
+          [control]="passwordCtrl"
+          [fieldName]="'field.password' | translate"
+        ></app-form-error-message>
+      </label>
+      <button
+        class="btn btn-primary uppercase mt-6 w-full"
+        [disabled]="form.invalid"
+        type="submit"
+      >
+        Sign in
+      </button>
+      <div class="mt-4">
+        {{ "auth.notAMember" | translate }}
+        <a routerLink="/auth/register" class="link-primary">{{
+          "auth.register" | translate
+        }}</a>
+      </div>
+    </form>
+  </div>
+</div>

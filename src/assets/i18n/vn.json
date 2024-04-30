@@ -1,0 +1,70 @@
+{
+  "common": {
+    "language": "Ngôn ngữ",
+    "success": "Thành công",
+    "error": "Có lỗi xảy ra",
+    "dashboard": "Bảng điều khiển",
+    "title": "Map Online",
+    "404notFound": "Không tìm thấy trang",
+    "home": "Trang chủ",
+    "about": "About",
+    "user.account": "Tài khoản người dùng",
+    "actions": "Thao tác"
+  },
+  "page": {
+    "home":"Trang chủ",
+    "about": "About",
+    "userManagement": "Quản lý người dùngs"
+  },
+  "button": {
+    "back": "Quay lại",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "edit": "Chỉnh sửa"
+  },
+  "field": {
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "email": "Email",
+    "confirmPassword": "Nhập lại mật khẩu",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "oldPassword": "Mật khẩu cũ",
+    "newPassword": "Mật khẩu mới",
+    "role": "Quyền"
+  },
+  "validator": {
+    "required": "{{fieldName}} là bắt buộc",
+    "email": "Trường này phải là email",
+    "pattern": "{{fieldName}} không đúng định dạng",
+    "passwordMismatch": "Mật khẩu xác nhận không trùng khớp",
+    "passwordShouldNotMatch": "Mật khẩu mới trùng mật khẩu cũ"
+  },
+  "placeholder": {
+    "email": "example@gmail.com",
+    "password": "Nhập mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "firstName": "Paul",
+    "lastName": "Allen",
+    "username": "example.user" 
+  },
+  "auth": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "notAMember": "Chưa có tài khoản? ",
+    "alreadyMember": "Đã có tài khoản? ",
+    "register.success": "Tạo tài khoản thành công",
+    "login.success": "Đăng nhập thành công",
+    "changePassword.success": "Đổi mật khẩu thành công",
+    "updateProfile.success": "Thay đổi thông tin thành công"
+  },
+  "usernav": {
+    "profile": "Tài khoản",
+    "changePassword": "Đổi mật khẩu",
+    "logout": "Đăng xuất",
+    "profile.desc": "Xem thông tin tài khoản",
+    "changePassword.desc": "Bảo vệ tài khoản",
+    "logout.desc": "Thoát tài khoản",
+    "settings": "Cài đặt"
+  }
+}
