@@ -7,3 +7,12 @@ export enum Role {
   User = 'user',
   Admin = 'admin',
 }
+
+export enum LayerType {
+  Marker = 'marker',
+  Polygon = 'polygon',
+  Rectangle = 'rectangle',
+  Circle = 'circle',
+  CircleMarker = 'circlemarker',
+  Line = 'polyline',
+}

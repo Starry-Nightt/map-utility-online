@@ -7,7 +7,7 @@ import { HttpService } from '@core/services/http.service';
 export class MapService {
   constructor(private http: HttpService) {}
 
-  getTileUrl(): string {
+  getTile(): string {
     return this.http.prefix + '/map/{z}/{x}/{y}.png';
   }
 }
