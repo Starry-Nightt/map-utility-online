@@ -4,6 +4,7 @@ import { BaseComponent } from '@core/components/base/base.component';
 import { ComponentService } from '@core/services/component.service';
 import { AuthService } from '@modules/auth/services/auth.service';
 import { RegisterDetail } from '@shared/interfaces/auth.interface';
+import { NAME_PATTERN, USERNAME_PATTERN } from '@shared/utilities/constants';
 import { passwordMatchValidator } from '@shared/utilities/validator';
 
 @Component({
@@ -14,20 +15,11 @@ import { passwordMatchValidator } from '@shared/utilities/validator';
 export class RegisterComponent extends BaseComponent implements OnInit {
   form = this.fb.group(
     {
-      firstName: [
-        '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)],
-      ],
-      lastName: [
-        '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)],
-      ],
+      firstName: ['', [Validators.required, Validators.pattern(NAME_PATTERN)]],
+      lastName: ['', [Validators.required, Validators.pattern(NAME_PATTERN)]],
       username: [
         '',
-        [
-          Validators.required,
-          Validators.pattern(/^[a-zA-Z]+(?:\.[a-zA-Z]+)*$/),
-        ],
+        [Validators.required, Validators.pattern(USERNAME_PATTERN)],
       ],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],

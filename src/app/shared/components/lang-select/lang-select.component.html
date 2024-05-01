@@ -1,0 +1,9 @@
+<select
+  class="select select-bordered w-full max-w-xs h-10 shadow-md"
+  (change)="onChangeLang($event)"
+  [(ngModel)]="langService.lang"
+>
+  <option *ngFor="let lang of langs" class="p-5" [value]="lang.id">
+    {{ lang.label }}
+  </option>
+</select>

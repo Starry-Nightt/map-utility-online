@@ -20,6 +20,13 @@ const routes: Routes = [
           import('./modules/map/map.module').then((m) => m.MapModule),
       },
       {
+        path: 'profile',
+        loadChildren: () =>
+          import('./modules/profile/profile.module').then(
+            (m) => m.ProfileModule
+          ),
+      },
+      {
         path: '',
         redirectTo: 'map',
         pathMatch: 'full',

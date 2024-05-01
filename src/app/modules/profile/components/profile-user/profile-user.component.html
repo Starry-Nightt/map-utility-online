@@ -1,0 +1,134 @@
+<form class="flex flex-col" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div
+    class="grid grid-rows-2 grid-flow-col gap-x-6"
+    [class.pb-4]="!isEdit"
+    [class.gap-y-0]="isEdit"
+    [class.gap-y-4]="!isEdit"
+  >
+    <div>
+      <ng-container *ngIf="!isEdit">
+        <div class="flex items-center gap-3 pt-3 pl-4">
+          <i class="fa-solid fa-envelope w-4 h-4 opacity-70"></i>
+          <label class="font-semibold">{{ "field.email" | translate }} :</label>
+          <app-text-copy [text]="currentUser.email"></app-text-copy>
+        </div>
+      </ng-container>
+      <label
+        class="input input-bordered flex items-center gap-2"
+        *ngIf="isEdit"
+      >
+        <i class="fa-solid fa-envelope w-4 h-4 opacity-70"></i>
+        <input
+          type="text"
+          class="grow input-disabled"
+          formControlName="email"
+          name="email"
+          [placeholder]="'placeholder.email' | translate"
+        />
+      </label>
+    </div>
+    <div>
+      <ng-container *ngIf="!isEdit">
+        <div class="flex items-center gap-3 pt-3 pl-4">
+          <i class="fa-solid fa-user w-4 h-4 opacity-70"></i>
+          <label class="font-semibold"
+            >{{ "field.username" | translate }} :</label
+          >
+          <app-text-copy [text]="currentUser.username"></app-text-copy>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEdit">
+        <label class="input input-bordered flex items-center gap-2">
+          <i class="fa-solid fa-user w-4 h-4 opacity-70"></i>
+          <input
+            type="text"
+            class="grow"
+            formControlName="username"
+            name="username"
+            [placeholder]="'placeholder.username' | translate"
+          />
+        </label>
+        <app-form-error-message
+          [control]="usernameCtrl"
+          [fieldName]="'field.username' | translate"
+        ></app-form-error-message>
+      </ng-container>
+    </div>
+    <div>
+      <ng-container *ngIf="!isEdit">
+        <div class="flex items-center gap-3 pt-3 pl-4">
+          <label class="font-semibold"
+            >{{ "field.lastName" | translate }} :</label
+          >
+          <app-text-copy [text]="currentUser.lastName"></app-text-copy>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEdit">
+        <label class="input input-bordered flex items-center gap-2">
+          <span class="font-semibold text-sm mr-2">{{
+            "field.lastName" | translate
+          }}</span>
+          <input
+            type="text"
+            class="grow"
+            formControlName="lastName"
+            name="lastName"
+            [placeholder]="'placeholder.lastName' | translate"
+          />
+        </label>
+        <app-form-error-message
+          [control]="lastNameCtrl"
+          [fieldName]="'field.lastName' | translate"
+        ></app-form-error-message>
+      </ng-container>
+    </div>
+    <div>
+      <ng-container *ngIf="!isEdit">
+        <div class="flex items-center gap-3 pt-3 pl-4">
+          <label class="font-semibold"
+            >{{ "field.firstName" | translate }} :</label
+          >
+          <app-text-copy [text]="currentUser.firstName"></app-text-copy>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEdit">
+        <label class="input input-bordered flex items-center gap-2">
+          <span class="font-semibold text-sm mr-2">{{
+            "field.firstName" | translate
+          }}</span>
+          <input
+            type="text"
+            class="grow"
+            formControlName="firstName"
+            name="firstName"
+            [placeholder]="'placeholder.firstName' | translate"
+          />
+        </label>
+        <app-form-error-message
+          [control]="firstNameCtrl"
+          [fieldName]="'field.firstName' | translate"
+        ></app-form-error-message>
+      </ng-container>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="flex items-center justify-center gap-5">
+    <ng-container *ngIf="!isEdit">
+      <button class="btn btn-secondary min-w-20 text-base" (click)="onEdit()">
+        {{ "button.edit" | translate }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="isEdit">
+      <button class="btn btn-neutral min-w-20 text-base" type="submit">
+        {{ "button.save" | translate }}
+      </button>
+      <button
+        class="btn btn-ghost min-w-20 text-base"
+        type="button"
+        (click)="onCancel()"
+      >
+        {{ "button.cancel" | translate }}
+      </button>
+    </ng-container>
+  </div>
+</form>

@@ -1,0 +1,71 @@
+<div class="flex m-10 p-8 gap-6">
+  <div class="w-1/4 flex flex-col">
+    <div class="card w-full bg-base-base-100 shadow-md p-8">
+      <div class="flex gap-4 mb-3">
+        <div class="avatar placeholder">
+          <div class="bg-secondary text-secondary-content rounded-full w-20">
+            <span class="select-none text-3xl">{{
+              authService.shortName
+            }}</span>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center">
+          <h2 class="card-title">
+            {{ authService.currentUser.username }}
+            <div [class]="'badge uppercase ' + getBadgeColor()">
+              {{ authService.currentUser.role }}
+            </div>
+          </h2>
+          <p class="text-gray-400 font-semibold mt-1">
+            {{ authService.currentUser.email }}
+          </p>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <ul class="menu bg-base-100 rounded-box w-full">
+        <li *ngFor="let item of items">
+          <a
+            class="py-3 my-2 text-lg font-semibold"
+            [routerLink]="item.link"
+            [class.active]="isTabActive(item.link)"
+          >
+            <span class="mt-0 mr-2">
+              <i [class]="item.icon"></i>
+            </span>
+            {{ item.label | translate }}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="flex-1">
+    <div class="card w-full bg-base-100 shadow-md p-8">
+      <div class="flex justify-between items-center">
+        <h2 class="card-title">{{ tabActiveLabel | translate }}</h2>
+        <button class="btn btn-error" (click)="onLogout()">
+          {{ "usernav.logout" | translate }}
+        </button>
+      </div>
+      <div class="divider"></div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<dialog #logoutModal class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">{{ "modal.logout.title" | translate }}</h3>
+    <p class="py-4">{{ "modal.logout.body" | translate }}</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn btn-primary min-w-16 mx-2" (click)="logout()">
+          {{ "button.yes" | translate }}
+        </button>
+        <button class="btn min-w-16 mx-2">
+          {{ "button.cancel" | translate }}
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>

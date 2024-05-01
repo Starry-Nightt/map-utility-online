@@ -1,6 +1,6 @@
 <span
-  *ngIf="control.invalid && (control.dirty || control.touched)"
   class="label-text-alt text-red-500 ml-1"
+  [class.invisible]="!(control.invalid && (control.dirty || control.touched))"
 >
   {{ getMessage() }}
 </span>

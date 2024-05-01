@@ -5,6 +5,7 @@ import {
   ChangePasswordDetail,
   LoginDetail,
   RegisterDetail,
+  UpdateProfileDetail,
 } from '@shared/interfaces/auth.interface';
 import {
   LoginSuccessResponse,
@@ -46,6 +47,14 @@ export class AuthService {
     return this.http.post('/auth/change-password', detail);
   }
 
+  updateProfile(detail: UpdateProfileDetail): Observable<void> {
+    return this.http.put(`/user/${this.currentUser.id}`, detail);
+  }
+
+  deleteAccount(): Observable<void> {
+    return this.http.delete(`/user/${this.currentUser.id}`);
+  }
+
   getCurrentUser(): Observable<SuccessResponse<UserInfo>> {
     return this.http.post('/auth/me');
   }
@@ -77,5 +86,9 @@ export class AuthService {
 
   get isAdmin(): boolean {
     return this.currentUser && this.currentUser.role === Role.Admin;
+  }
+
+  get shortName(): string {
+    return this.currentUser.firstName.charAt(0);
   }
 }

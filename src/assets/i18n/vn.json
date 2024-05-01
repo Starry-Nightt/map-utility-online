@@ -2,14 +2,15 @@
   "common": {
     "language": "Ngôn ngữ",
     "success": "Thành công",
-    "error": "Có lỗi xảy ra",
+    "error": "Thất bại",
     "dashboard": "Bảng điều khiển",
     "title": "Map Online",
     "404notFound": "Không tìm thấy trang",
     "home": "Trang chủ",
     "about": "About",
     "user.account": "Tài khoản người dùng",
-    "actions": "Thao tác"
+    "actions": "Thao tác",
+    "request.error": "Có lỗi xảy ra. Vui lòng thử lại"
   },
   "page": {
     "home":"Trang chủ",
@@ -20,7 +21,10 @@
     "back": "Quay lại",
     "save": "Lưu",
     "cancel": "Hủy",
-    "edit": "Chỉnh sửa"
+    "edit": "Chỉnh sửa",
+    "yes": "Có",
+    "changePassword": "Đổi",
+    "deleteAccount": "Xóa tài khoản"
   },
   "field": {
     "username": "Tên đăng nhập",
@@ -56,7 +60,8 @@
     "register.success": "Tạo tài khoản thành công",
     "login.success": "Đăng nhập thành công",
     "changePassword.success": "Đổi mật khẩu thành công",
-    "updateProfile.success": "Thay đổi thông tin thành công"
+    "updateProfile.success": "Thay đổi thông tin thành công",
+    "deleteAccount.success": "Xóa tài khoản thành công"
   },
   "usernav": {
     "profile": "Tài khoản",
@@ -66,5 +71,11 @@
     "changePassword.desc": "Bảo vệ tài khoản",
     "logout.desc": "Thoát tài khoản",
     "settings": "Cài đặt"
+  },
+  "modal": {
+    "logout.title": "Đăng xuất",
+    "logout.body": "Bạn có chắc muốn thoát tài khoản ?",
+    "deleteAccount.title": "Xóa tài khoản",
+    "deleteAccount.body": "Bạn có chắc muốn xóa tài khoản"
   }
 }

@@ -9,7 +9,8 @@
     "home": "Home",
     "about": "About",
     "user.account": "User account",
-    "actions": "Actions"
+    "actions": "Actions",
+    "request.error": "Something went wrong. Try again"
   },
   "page": {
     "home":"Home",
@@ -20,7 +21,10 @@
     "back": "Back",
     "save": "Save",
     "cancel": "Cancel",
-    "edit": "Edit"
+    "edit": "Edit",
+    "yes": "Yes",
+    "changePassword": "Change password",
+    "deleteAccount": "Delete Account"
   },
   "field": {
     "username": "Username",
@@ -59,7 +63,8 @@
     "register.success": "Register successfully",
     "login.success": "Login successfully",
     "changePassword.success": "Change password successfully",
-    "updateProfile.success": "Update profile successfully"
+    "updateProfile.success": "Update profile successfully",
+    "deleteAccount.success": "Delete account successfully"
   },
   "usernav": {
     "profile": "Profile",
@@ -69,5 +74,9 @@
     "changePassword.desc": "Security your account",
     "logout.desc": "Exit from your account",
     "settings": "Settings"
+  },
+  "modal": {
+    "logout.title": "Sign Out",
+    "logout.body": "Are you sure that you want to exit account ?"
   }
 }

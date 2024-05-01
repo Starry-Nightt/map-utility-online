@@ -9,6 +9,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { ContainerComponent } from './layout/container/container.component';
 import { CommonModule } from '@angular/common';
 import INTERCEPTORS from './interceptors';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import INTERCEPTORS from './interceptors';
     FooterComponent,
     ContainerComponent,
   ],
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, SharedModule],
   providers: [...INTERCEPTORS],
   exports: [],
 })

@@ -15,3 +15,9 @@ export interface ChangePasswordDetail {
   oldPassword: string;
   changePassword: string;
 }
+
+export interface UpdateProfileDetail {
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+}

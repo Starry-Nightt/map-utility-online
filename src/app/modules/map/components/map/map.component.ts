@@ -11,6 +11,7 @@ import { AuthService } from '@modules/auth/services/auth.service';
 import { MapService } from '@modules/map/services/map.service';
 import * as L from 'leaflet';
 import { TileLayer } from 'leaflet';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -33,7 +34,9 @@ export class MapComponent
   }
   ngAfterViewInit(): void {
     this.initMap();
-    this.scrollIntoView();
+    this.subscribeUntilDestroy(timer(100), () => {
+      this.scrollIntoView();
+    });
   }
 
   ngOnInit() {}

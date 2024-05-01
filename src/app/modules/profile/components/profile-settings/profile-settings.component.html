@@ -1,0 +1,37 @@
+<div class="flex flex-col gap-6">
+  <div class="flex justify-between">
+    <h3 class="font-semibold">{{ "common.language" | translate }}</h3>
+    <app-lang-select></app-lang-select>
+  </div>
+
+  <div class="flex justify-center">
+    <button
+      class="btn btn-square btn-error w-full max-w-sm text-base"
+      (click)="onDeleteAccount()"
+    >
+      {{ "button.deleteAccount" | translate }}
+    </button>
+  </div>
+</div>
+
+<dialog #deleteAccountModal class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-xl text-error">
+      {{ "modal.deleteAccount.title" | translate }}
+    </h3>
+    <p class="py-4">
+      {{ "modal.deleteAccount.body" | translate }}
+      <b>{{ authService.currentUser.email }}</b>
+    </p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn btn-error min-w-16 mx-2" (click)="deleteAccount()">
+          {{ "button.yes" | translate }}
+        </button>
+        <button class="btn min-w-16 mx-2">
+          {{ "button.cancel" | translate }}
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>

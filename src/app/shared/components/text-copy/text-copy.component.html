@@ -1,0 +1,10 @@
+<span class="inline-flex justify-between items-center gap-4">
+  <span>{{ text | translate }}</span>
+  <button
+    class="btn btn-circle btn-sm btn-ghost text-gray-600"
+    type="button"
+    [copy-clipboard]="text"
+  >
+    <i class="fa-solid fa-copy"></i>
+  </button>
+</span>
