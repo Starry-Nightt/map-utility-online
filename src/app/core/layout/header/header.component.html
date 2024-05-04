@@ -12,13 +12,35 @@
   </div>
   <div class="flex-none gap-4">
     <app-lang-select></app-lang-select>
-    <div class="avatar placeholder cursor-pointer">
+    <div class="dropdown dropdown-end" [style]="{ zIndex: 402 }">
       <div
-        class="bg-secondary text-secondary-content rounded-full w-10 hover:opacity-70 ease-out duration-300"
-        (click)="onViewProfile()"
+        class="avatar placeholder btn btn-ghost btn-circle"
+        tabindex="0"
+        role="button"
       >
-        <span class="select-none">{{ shortName }}</span>
+        <div class="bg-secondary text-secondary-content rounded-full w-10">
+          <span class="select-none">{{ shortName }}</span>
+        </div>
       </div>
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+      >
+        <li *ngFor="let item of items">
+          <a [routerLink]="item.link" *ngIf="!item.isLogout">
+            <span class="mt-0 mr-2">
+              <i [class]="item.icon"></i>
+            </span>
+            {{ item.label | translate }}</a
+          >
+          <a *ngIf="item.isLogout" (click)="onLogout()">
+            <span class="mt-0 mr-2">
+              <i [class]="item.icon"></i>
+            </span>
+            {{ item.label | translate }}</a
+          >
+        </li>
+      </ul>
     </div>
   </div>
 </div>

@@ -1,8 +1,10 @@
 import { TileLayer } from 'leaflet';
 
 export interface GeoJSONData {
+  id?: string;
+  userId?: string;
   geometry: {
-    coordinates: number[] | number[][] | number[][][];
+    coordinates: any;
   };
   properties: any;
   type: string;

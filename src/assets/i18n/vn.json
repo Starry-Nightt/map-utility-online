@@ -24,7 +24,9 @@
     "edit": "Chỉnh sửa",
     "yes": "Có",
     "changePassword": "Đổi",
-    "deleteAccount": "Xóa tài khoản"
+    "deleteAccount": "Xóa tài khoản",
+    "remove": "Xóa",
+    "clear": "Xóa tất cả"
   },
   "field": {
     "username": "Tên đăng nhập",
@@ -76,6 +78,8 @@
     "logout.title": "Đăng xuất",
     "logout.body": "Bạn có chắc muốn thoát tài khoản ?",
     "deleteAccount.title": "Xóa tài khoản",
-    "deleteAccount.body": "Bạn có chắc muốn xóa tài khoản"
+    "deleteAccount.body": "Bạn có chắc muốn xóa tài khoản",
+    "clear.title": "Xóa dữ liệu vị trí",
+    "clear.body": "Bạn có chắc muốn xóa toàn bộ dữ liệu bản đồ"
   }
 }

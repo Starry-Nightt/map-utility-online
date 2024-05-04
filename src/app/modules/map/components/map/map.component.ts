@@ -24,7 +24,10 @@ export class MapComponent
   implements OnInit, AfterViewInit
 {
   private map: L.Map;
+  private drawnItems: L.FeatureGroup<any>;
+  private drawControl: L.Control.Draw;
   @ViewChild('map') mapElement: ElementRef<HTMLDivElement>;
+  @ViewChild('clearModal') clearModal: ElementRef;
   constructor(
     service: ComponentService,
     private mapService: MapService,
@@ -40,6 +43,11 @@ export class MapComponent
   ngAfterViewInit(): void {
     this.initMap();
     this.addControls();
+    this.listenCreateLayer();
+    // this.listenDefaultCreateLayer();
+    // this.listenEditLayer();
+    this.listenDeleteLayer();
+    this.loadLayer();
     this.subscribeUntilDestroy(timer(100), () => {
       this.scrollIntoView();
     });
@@ -62,50 +70,125 @@ export class MapComponent
   }
 
   addControls() {
-    var drawnItems = new L.FeatureGroup();
-    this.map.addLayer(drawnItems);
-    var drawControl = new L.Control.Draw({
+    this.drawnItems = new L.FeatureGroup();
+    this.map.addLayer(this.drawnItems);
+
+    this.drawControl = new L.Control.Draw({
       draw: {
         rectangle: false,
         circlemarker: false,
       },
       edit: {
-        featureGroup: drawnItems,
+        featureGroup: this.drawnItems,
+        edit: false,
+        remove: false,
       },
     });
-    this.map.addControl(drawControl);
 
-    this.map.on(L.Draw.Event.CREATED, (event: any) => {
-      const layerType = event.layerType;
-      const layer = event.layer;
-      const myGeoJSON = this.transformLayerToJson(layer);
-      let myLayer;
-      if (myGeoJSON.properties?.radius) {
-        myLayer = L.geoJSON(myGeoJSON as any, {
-          pointToLayer: (feature, latlng) => {
-            return new L.Circle(latlng, feature.properties.radius);
-          },
-          onEachFeature: function (feature, layer) {
-            // layer.bindPopup('<p>Name: ' + feature.properties.name);
-          },
-        });
-      } else {
-        myLayer = L.geoJSON(myGeoJSON as any);
-      }
-      drawnItems.addLayer(myLayer);
+    this.drawControl.addTo(this.map);
+  }
+
+  generateLayer(data: GeoJSONData): L.Layer {
+    const geoJsonData = data;
+    geoJsonData.geometry.coordinates = JSON.parse(
+      geoJsonData.geometry.coordinates
+    );
+    delete geoJsonData.id;
+    delete geoJsonData.userId;
+    let createdLayer: L.GeoJSON;
+    if (geoJsonData.properties?.radius) {
+      createdLayer = L.geoJSON(geoJsonData as any, {
+        pointToLayer: (feature, latlng) => {
+          return new L.Circle(latlng, feature.properties.radius);
+        },
+        onEachFeature: function (feature, layer) {
+          const popupContent = `<button class="delete-button btn" data-id=${feature.properties.id}>Remove</button>`;
+          layer.bindPopup(popupContent);
+        },
+      });
+    } else {
+      createdLayer = L.geoJSON(geoJsonData as any, {
+        onEachFeature: function (feature, layer) {
+          const popupContent = `<button class="delete-button btn" data-id=${feature.properties.id}>Remove</button>`;
+          layer.bindPopup(popupContent);
+        },
+      });
+    }
+    return createdLayer;
+  }
+
+  loadLayer() {
+    this.subscribeUntilDestroy(this.mapService.getLayer(), (res) => {
+      const geoJsonData = res.data as GeoJSONData[];
+      const layers = geoJsonData.map((it) => {
+        return this.generateLayer(it);
+      });
+      layers.forEach((it) => this.drawnItems.addLayer(it));
     });
+  }
 
-    // this.map.on(L.Draw.Event.EDITED, (event: any) => {
-    //   event.layers.eachLayer((layer) => {
-    //     console.log(layer.toGeoJSON());
-    //   });
-    // });
+  listenCreateLayer() {
+    this.map.on(L.Draw.Event.CREATED, (event: any) => {
+      const layer = event.layer;
+      const geoJsonData = this.transformLayerToJson(layer);
+      geoJsonData.geometry.coordinates = JSON.stringify(
+        geoJsonData.geometry.coordinates
+      );
+      this.subscribeUntilDestroy(
+        this.mapService.createLayer(geoJsonData),
+        (res) => {
+          const geoJsonResult = res.data as GeoJSONData;
+          const createdLayer = this.generateLayer(geoJsonResult);
+          this.drawnItems.addLayer(createdLayer);
+        },
+        () => {
+          this.showError(
+            this.trans('common.error'),
+            this.trans('common.request.error')
+          );
+        }
+      );
+    });
+  }
 
-    // this.map.on(L.Draw.Event.DELETED, (event: any) => {
-    //   event.layers.eachLayer((layer) => {
-    //     console.log(layer.toGeoJSON());
-    //   });
-    // });
+  listenDeleteLayer() {
+    this.map.on('popupopen', (event: L.PopupEvent) => {
+      const deleteButton = document.querySelector('.delete-button');
+      const layerId = deleteButton.getAttribute('data-id');
+      deleteButton.addEventListener('click', () => {
+        this.subscribeUntilDestroy(
+          this.mapService.deleteLayer(layerId),
+          () => {
+            this.map.removeLayer((event.popup as any)._source);
+          },
+          () => {
+            this.showError(
+              this.trans('common.error'),
+              this.trans('common.request.error')
+            );
+          }
+        );
+      });
+    });
+  }
+
+  onOpenClearLayerModal() {
+    this.clearModal.nativeElement.showModal();
+  }
+
+  clearLayer() {
+    this.subscribeUntilDestroy(
+      this.mapService.clearLayer(),
+      () => {
+        this.drawnItems.clearLayers();
+      },
+      () => {
+        this.showError(
+          this.trans('common.error'),
+          this.trans('common.request.error')
+        );
+      }
+    );
   }
 
   transformLayerToJson(layer) {
@@ -113,10 +196,7 @@ export class MapComponent
 
     if (layer instanceof L.Circle) {
       json.properties.radius = layer.getRadius();
-      json.properties.latitude = json.geometry.coordinates[0];
-      json.properties.longitude = json.geometry.coordinates[1];
     }
-
     return json;
   }
 

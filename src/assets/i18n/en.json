@@ -24,7 +24,9 @@
     "edit": "Edit",
     "yes": "Yes",
     "changePassword": "Change password",
-    "deleteAccount": "Delete Account"
+    "deleteAccount": "Delete Account",
+    "remove": "Remove",
+    "clear": "Clear"
   },
   "field": {
     "username": "Username",
@@ -77,6 +79,10 @@
   },
   "modal": {
     "logout.title": "Sign Out",
-    "logout.body": "Are you sure that you want to exit account ?"
+    "logout.body": "Are you sure that you want to exit account ?",
+    "deleteAccount.title": "Delete account",
+    "deleteAccount.body": "Are you sure that you want to delete account",
+    "clear.title": "Delete geo data",
+    "clear.body": "Are you sure that you want to clear all geo data"
   }
 }

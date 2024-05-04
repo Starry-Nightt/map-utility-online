@@ -1,5 +1,30 @@
-<div class="h-screen w-full" (click)="scrollIntoView()">
+<div class="h-screen w-full relative" (click)="scrollIntoView()">
   <div class="h-full">
     <div id="map" class="h-full" #map></div>
+    <button
+      class="btn btn-error absolute bottom-3 left-3 text-base"
+      [style]="{ zIndex: 400 }"
+      (click)="onOpenClearLayerModal()"
+    >
+      {{ "button.clear" | translate }}
+    </button>
   </div>
 </div>
+
+<dialog #clearModal class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">{{ "modal.clear.title" | translate }}</h3>
+    <p class="py-4">{{ "modal.clear.body" | translate }}</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn btn-error min-w-16 mx-2" (click)="clearLayer()">
+          {{ "button.yes" | translate }}
+        </button>
+        <button class="btn min-w-16 mx-2">
+          {{ "button.cancel" | translate }}
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>

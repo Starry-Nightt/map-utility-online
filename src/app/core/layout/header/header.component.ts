@@ -10,6 +10,26 @@ import { AuthService } from '@modules/auth/services/auth.service';
 })
 export class HeaderComponent extends BaseComponent implements OnInit {
   shortName: string;
+  items = [
+    {
+      link: '/profile/user',
+      label: 'usernav.profile',
+      icon: 'fa-solid fa-user',
+      isLogout: false,
+    },
+    {
+      link: '/profile/change-password',
+      label: 'usernav.changePassword',
+      icon: 'fa-solid fa-key',
+      isLogout: false,
+    },
+    {
+      link: 'logout',
+      isLogout: true,
+      label: 'usernav.logout',
+      icon: 'fa-solid fa-right-from-bracket',
+    },
+  ];
   constructor(service: ComponentService, public authService: AuthService) {
     super(service);
   }
@@ -19,7 +39,8 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     this.shortName = currentUser.firstName.charAt(0);
   }
 
-  onViewProfile() {
-    this.redirect(['/profile']);
+  onLogout() {
+    this.authService.logout();
+    this.redirect(['/auth']);
   }
 }
