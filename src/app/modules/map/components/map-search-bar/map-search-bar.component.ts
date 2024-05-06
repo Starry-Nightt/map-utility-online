@@ -59,9 +59,8 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
           this.lastSearchLocation.every((it) => it.city !== name) ||
           this.lastSearchLocation.length == 0
         ) {
-          this.lastSearchLocation.push(this.currentLocation);
-          if (this.lastSearchLocation.length > 5)
-            this.lastSearchLocation.shift();
+          this.lastSearchLocation.unshift(this.currentLocation);
+          if (this.lastSearchLocation.length > 5) this.lastSearchLocation.pop();
         }
       }
       this.onHideLocation();
