@@ -10,7 +10,8 @@
     "about": "About",
     "user.account": "User account",
     "actions": "Actions",
-    "request.error": "Something went wrong. Try again"
+    "request.error": "Something went wrong. Try again",
+    "search": "Search"
   },
   "page": {
     "home":"Home",
@@ -84,5 +85,9 @@
     "deleteAccount.body": "Are you sure that you want to delete account",
     "clear.title": "Delete geo data",
     "clear.body": "Are you sure that you want to clear all geo data"
+  },
+  "map": {
+    "locationUnable.title": "You have not granted location access",
+    "locationUnable.body": "Please allow location access in your browser"  
   }
 }

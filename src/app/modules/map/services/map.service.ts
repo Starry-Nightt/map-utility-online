@@ -1,7 +1,7 @@
 import { AuthService } from './../../auth/services/auth.service';
 import { Injectable } from '@angular/core';
 import { HttpService } from '@core/services/http.service';
-import { GeoJSONData } from '@shared/interfaces/map.interface';
+import { GeoJSONData, LocationData } from '@shared/interfaces/map.interface';
 import { SuccessResponse } from '@shared/interfaces/response';
 import { Observable } from 'rxjs';
 
@@ -29,5 +29,9 @@ export class MapService {
 
   clearLayer(): Observable<void> {
     return this.http.delete(`/map/clear/${this.authService.currentUser.id}`);
+  }
+
+  getLocation(key: string): Observable<SuccessResponse<LocationData[]>> {
+    return this.http.get(`/map/location/${key}`);
   }
 }

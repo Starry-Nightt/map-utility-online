@@ -12,7 +12,12 @@ import { MapService } from '@modules/map/services/map.service';
 import * as L from 'leaflet';
 import { timer } from 'rxjs';
 import 'leaflet-draw';
-import { CustomTileLayer, GeoJSONData } from '@shared/interfaces/map.interface';
+import {
+  Coordinates,
+  CustomTileLayer,
+  GeoJSONData,
+} from '@shared/interfaces/map.interface';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-map',
@@ -26,6 +31,13 @@ export class MapComponent
   private map: L.Map;
   private drawnItems: L.FeatureGroup<any>;
   private drawControl: L.Control.Draw;
+
+  data: GeoJSONData[] = [];
+  searchIcon = L.divIcon({
+    className: 'fa-solid fa-location-dot text-3xl text-red-500',
+  });
+  searchMarker = L.marker([0, 0], { icon: this.searchIcon });
+
   @ViewChild('map') mapElement: ElementRef<HTMLDivElement>;
   @ViewChild('clearModal') clearModal: ElementRef;
   constructor(
@@ -37,6 +49,7 @@ export class MapComponent
   }
 
   ngOnInit() {
+    navigator.geolocation;
     L.Icon.Default.imagePath = 'assets/';
   }
 
@@ -44,8 +57,6 @@ export class MapComponent
     this.initMap();
     this.addControls();
     this.listenCreateLayer();
-    // this.listenDefaultCreateLayer();
-    // this.listenEditLayer();
     this.listenDeleteLayer();
     this.loadLayer();
     this.subscribeUntilDestroy(timer(100), () => {
@@ -119,8 +130,8 @@ export class MapComponent
 
   loadLayer() {
     this.subscribeUntilDestroy(this.mapService.getLayer(), (res) => {
-      const geoJsonData = res.data as GeoJSONData[];
-      const layers = geoJsonData.map((it) => {
+      this.data = res.data as GeoJSONData[];
+      const layers = this.data.map((it) => {
         return this.generateLayer(it);
       });
       layers.forEach((it) => this.drawnItems.addLayer(it));
@@ -138,6 +149,7 @@ export class MapComponent
         this.mapService.createLayer(geoJsonData),
         (res) => {
           const geoJsonResult = res.data as GeoJSONData;
+          this.data.push(geoJsonResult);
           const createdLayer = this.generateLayer(geoJsonResult);
           this.drawnItems.addLayer(createdLayer);
         },
@@ -159,6 +171,7 @@ export class MapComponent
         this.subscribeUntilDestroy(
           this.mapService.deleteLayer(layerId),
           () => {
+            this.data = this.data.filter((it) => it.properties.id !== layerId);
             this.map.removeLayer((event.popup as any)._source);
           },
           () => {
@@ -181,6 +194,7 @@ export class MapComponent
       this.mapService.clearLayer(),
       () => {
         this.drawnItems.clearLayers();
+        this.data = [];
       },
       () => {
         this.showError(
@@ -198,6 +212,32 @@ export class MapComponent
       json.properties.radius = layer.getRadius();
     }
     return json;
+  }
+
+  searchLocation(coordinate: Coordinates) {
+    this.map.setView([coordinate.lat, coordinate.lng], 12);
+    this.searchMarker.setLatLng([coordinate.lat, coordinate.lng]);
+    this.searchMarker.addTo(this.map);
+  }
+
+  viewCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        this.searchLocation({ lat, lng });
+      },
+      () => {
+        this.showInfo(
+          this.trans('map.locationUnable.title'),
+          this.trans('map.locationUnable.body')
+        );
+      }
+    );
+  }
+
+  onCancelSearchView() {
+    this.searchMarker.remove();
   }
 
   scrollIntoView() {

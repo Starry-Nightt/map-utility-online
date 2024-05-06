@@ -45,6 +45,10 @@ export class BaseComponent {
     this.componentService.toastr.error(body, title);
   }
 
+  showInfo(title: string, body?: string) {
+    this.componentService.toastr.info(body, title);
+  }
+
   get router(): Router {
     return this.componentService.router;
   }

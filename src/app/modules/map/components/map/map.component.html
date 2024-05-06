@@ -4,10 +4,22 @@
     <button
       class="btn btn-error absolute bottom-3 left-3 text-base"
       [style]="{ zIndex: 400 }"
+      [disabled]="!data.length"
       (click)="onOpenClearLayerModal()"
     >
       {{ "button.clear" | translate }}
     </button>
+    <button
+      class="btn btn-circle absolute bottom-8 right-3"
+      [style]="{ zIndex: 400 }"
+      (click)="viewCurrentLocation()"
+    >
+      <i class="fa-solid fa-location-crosshairs text-2xl"></i>
+    </button>
+    <app-map-search-bar
+      (search)="searchLocation($event)"
+      (cancelSearch)="onCancelSearchView()"
+    ></app-map-search-bar>
   </div>
 </div>
 

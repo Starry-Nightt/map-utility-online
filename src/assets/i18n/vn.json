@@ -10,7 +10,8 @@
     "about": "About",
     "user.account": "Tài khoản người dùng",
     "actions": "Thao tác",
-    "request.error": "Có lỗi xảy ra. Vui lòng thử lại"
+    "request.error": "Có lỗi xảy ra. Vui lòng thử lại",
+    "search": "Tìm kiếm"
   },
   "page": {
     "home":"Trang chủ",
@@ -81,5 +82,9 @@
     "deleteAccount.body": "Bạn có chắc muốn xóa tài khoản",
     "clear.title": "Xóa dữ liệu vị trí",
     "clear.body": "Bạn có chắc muốn xóa toàn bộ dữ liệu bản đồ"
+  },
+  "map": {
+    "locationUnable.title": "Chưa có quyền truy cập vị trí",
+    "locationUnable.body": "Vui lòng cho phép quyền truy cập vị trí trên trình duyệt"  
   }
 }

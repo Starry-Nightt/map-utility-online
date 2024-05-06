@@ -50,3 +50,21 @@ export class CustomTileLayer extends TileLayer {
     return img;
   }
 }
+
+export interface Coordinates {
+  lat: number;
+  lng: number;
+}
+
+export interface LocationData {
+  id: string;
+  city: string;
+  lat: string;
+  lng: string;
+  country: string;
+  iso2: string;
+  adminName: string;
+  capital: string;
+  population: string;
+  populationProper: string;
+}

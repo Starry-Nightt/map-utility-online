@@ -1,0 +1,68 @@
+<div class="absolute top-3 right-3 min-w-96" [style]="{ zIndex: 400 }">
+  <label class="input input-bordered flex items-center gap-2 w-full">
+    <input
+      type="text"
+      class="grow"
+      [placeholder]="'common.search' | translate"
+      [formControl]="searchKey"
+      (keyup.enter)="handleActionSearchLocationByString()"
+      (focus)="onShowLocation()"
+    />
+    <div class="flex gap-1">
+      <button
+        *ngIf="isSearchView"
+        class="btn-ghost btn btn-sm btn-circle"
+        (click)="onCancelSearchView()"
+      >
+        <i class="fa-solid fa-xmark opacity-70 text-base"></i>
+      </button>
+      <button
+        class="btn-ghost btn btn-sm btn-circle"
+        (click)="handleActionSearchLocationByString()"
+      >
+        <i class="fa-solid fa-magnifying-glass text-base opacity-70"></i>
+      </button>
+    </div>
+  </label>
+  <ul
+    *ngIf="locations.length > 0 && isShowLocation"
+    class="menu bg-base-200 w-fit absolute right-0 top-full translate-y-2 min-w-full rounded-box"
+  >
+    <li *ngFor="let location of locations">
+      <a
+        (click)="searchLocation(location.lat, location.lng, location.city)"
+        class="flex justify-between items-center"
+        [class.active]="currentLocation?.city === location.city"
+      >
+        <div>
+          <span><i class="fa-solid fa-location-dot mr-4"></i></span>
+          <span class="text-base leading-loose">{{ location.city }}</span>
+        </div>
+        <div class="text-sm text-neutral-500 font-medium">
+          {{ location.adminName }}
+        </div>
+      </a>
+    </li>
+  </ul>
+  <ul
+    *ngIf="
+      locations.length == 0 && lastSearchLocation.length > 0 && isShowLocation
+    "
+    class="menu bg-base-200 w-fit absolute right-0 top-full translate-y-2 min-w-full rounded-box"
+  >
+    <li *ngFor="let location of lastSearchLocation">
+      <a
+        (click)="searchLocation(location.lat, location.lng, location.city)"
+        class="flex justify-between items-center"
+      >
+        <div>
+          <span><i class="fa-regular fa-clock mr-4"></i></span>
+          <span class="text-base leading-loose">{{ location.city }}</span>
+        </div>
+        <div class="text-sm text-neutral-500 font-medium">
+          {{ location.adminName }}
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
