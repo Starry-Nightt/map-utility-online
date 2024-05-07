@@ -70,6 +70,7 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
 
   handleActionSearchLocationByString() {
     const key = this.searchKey.value;
+    if (key === this.currentLocation.city) return;
     if (key.trim().length == 0) return;
     const [lat, lng] = key.split(' ');
     if (isNumber(lat) && isNumber(lng)) {
