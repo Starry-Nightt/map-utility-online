@@ -35,7 +35,18 @@
         [class.active]="currentLocation?.city === location.city"
       >
         <div>
-          <span><i class="fa-solid fa-location-dot mr-4"></i></span>
+          <span
+            ><i
+              class="fa-solid fa-location-dot mr-4"
+              *ngIf="!isSearchRecently(location)"
+            ></i
+          ></span>
+          <span
+            ><i
+              class="fa-regular fa-clock mr-4"
+              *ngIf="isSearchRecently(location)"
+            ></i
+          ></span>
           <span class="text-base leading-loose">{{ location.city }}</span>
         </div>
         <div class="text-sm text-neutral-500 font-medium">

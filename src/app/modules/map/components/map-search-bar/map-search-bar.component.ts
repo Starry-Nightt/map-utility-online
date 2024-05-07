@@ -53,6 +53,7 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
       this.search.emit(result);
       this.isSearchView = true;
       if (name && name.length) {
+        console.log('in');
         this.searchKey.setValue(name, { emitEvent: false });
         this.currentLocation = this.locations.find((it) => it.city === name);
         if (
@@ -70,8 +71,17 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
   handleActionSearchLocationByString() {
     const key = this.searchKey.value;
     if (key.trim().length == 0) return;
+    const [lat, lng] = key.split(' ');
+    if (isNumber(lat) && isNumber(lng)) {
+      this.searchLocation(lat, lng);
+      return;
+    }
     if (this.locations.length == 0) return;
-    this.searchLocation(this.locations[0].lat, this.locations[0].lng);
+    this.searchLocation(
+      this.locations[0].lat,
+      this.locations[0].lng,
+      this.locations[0].city
+    );
   }
 
   onCancelSearchView() {
@@ -79,6 +89,10 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
     this.isSearchView = false;
     this.searchKey.setValue('');
     this.currentLocation = null;
+  }
+
+  isSearchRecently(l: LocationData): boolean {
+    return this.lastSearchLocation.findIndex((it) => it.id === l.id) != -1;
   }
 
   onShowLocation() {
