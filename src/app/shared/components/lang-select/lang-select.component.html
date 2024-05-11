@@ -3,7 +3,7 @@
   (change)="onChangeLang($event)"
   [(ngModel)]="langService.lang"
 >
-  <option *ngFor="let lang of langs" class="p-5" [value]="lang.id">
+  <option *ngFor="let lang of langs" [value]="lang.id">
     {{ lang.label }}
   </option>
 </select>

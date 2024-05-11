@@ -88,7 +88,7 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
   onCancelSearchView() {
     this.cancelSearch.emit();
     this.isSearchView = false;
-    this.searchKey.setValue('');
+    this.searchKey.setValue('', { emitEvent: false });
     this.currentLocation = null;
   }
 

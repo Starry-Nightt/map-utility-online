@@ -1,0 +1,26 @@
+<ul class="menu menu-horizontal bg-base-200 rounded-box text-base">
+  <li>
+    <a
+      routerLink="/map"
+      [class.active]="router.url === '/' || router.url === '/map'"
+    >
+      <i class="fa-solid fa-map-location-dot"></i>
+      <span>Map</span>
+    </a>
+  </li>
+  <li>
+    <a routerLink="/user" [class.active]="router.url.startsWith('/user')">
+      <i class="fa-solid fa-users"></i>
+      <span>Users</span>
+    </a>
+  </li>
+  <li>
+    <a
+      routerLink="/profile/settings"
+      [class.active]="router.url.startsWith('/profile')"
+    >
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </li>
+</ul>

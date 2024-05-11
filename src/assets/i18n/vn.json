@@ -86,5 +86,15 @@
   "map": {
     "locationUnable.title": "Chưa có quyền truy cập vị trí",
     "locationUnable.body": "Vui lòng cho phép quyền truy cập vị trí trên trình duyệt"  
+  },
+  "userList": {
+    "create": "Thêm người dùng",
+    "action": "Tác vụ",
+    "username": "Tên đăng nhập",
+    "email": "Email",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "id": "ID",
+    "role": "Quyền"
   }
 }

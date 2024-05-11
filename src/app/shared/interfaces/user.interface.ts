@@ -8,3 +8,12 @@ export interface UserInfo {
   lastName: string;
   username: string;
 }
+
+export interface UserCreateDetail {
+  email: string;
+  password: string;
+  role: Role;
+  firstName: string;
+  lastName: string;
+  username: string;
+}

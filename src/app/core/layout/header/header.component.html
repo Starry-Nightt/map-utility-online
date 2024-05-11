@@ -1,46 +1,12 @@
 <div class="navbar bg-neutral py-3 relative">
-  <div class="flex-1">
-    <a
-      class="btn btn-ghost text-xl font-bold lowercase text-neutral-content"
-      routerLink="/"
-    >
-      <span class="mt-1 mr-1">
-        <i class="fa-solid fa-globe"></i>
-      </span>
-      {{ "common.title" | translate }}</a
-    >
+  <div class="navbar-start">
+    <app-logo></app-logo>
   </div>
-  <div class="flex-none gap-4">
+  <div class="navbar-center" *ngIf="authService.isAdmin">
+    <app-admin-menu></app-admin-menu>
+  </div>
+  <div class="navbar-end gap-4">
     <app-lang-select></app-lang-select>
-    <div class="dropdown dropdown-end" [style]="{ zIndex: 402 }">
-      <div
-        class="avatar placeholder btn btn-ghost btn-circle"
-        tabindex="0"
-        role="button"
-      >
-        <div class="bg-secondary text-secondary-content rounded-full w-10">
-          <span class="select-none">{{ shortName }}</span>
-        </div>
-      </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        <li *ngFor="let item of items">
-          <a [routerLink]="item.link" *ngIf="!item.isLogout">
-            <span class="mt-0 mr-2">
-              <i [class]="item.icon"></i>
-            </span>
-            {{ item.label | translate }}</a
-          >
-          <a *ngIf="item.isLogout" (click)="onLogout()">
-            <span class="mt-0 mr-2">
-              <i [class]="item.icon"></i>
-            </span>
-            {{ item.label | translate }}</a
-          >
-        </li>
-      </ul>
-    </div>
+    <app-user-avatar-menu></app-user-avatar-menu>
   </div>
 </div>

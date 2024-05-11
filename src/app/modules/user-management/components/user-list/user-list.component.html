@@ -1,0 +1,75 @@
+<div class="p-5 mt-10 flex gap-5 flex-col">
+  <div class="flex justify-between">
+    <label class="input input-bordered flex items-center gap-2 w-full max-w-sm">
+      <input
+        type="text"
+        class="grow"
+        [placeholder]="'common.search' | translate"
+      />
+      <div class="flex gap-1">
+        <button class="btn-ghost btn btn-sm btn-circle">
+          <i class="fa-solid fa-magnifying-glass text-base opacity-70"></i>
+        </button>
+      </div>
+    </label>
+    <button class="btn btn-primary text-base">
+      {{ "userList.create" | translate }}
+    </button>
+  </div>
+  <div *ngIf="users$ | async as users">
+    <app-data-table [columns]="columns" [values]="users" class="min-h-96">
+      <ng-template #body let-item let-columns="columns">
+        <tr>
+          <td *ngFor="let column of columns">
+            <span *ngIf="column.key === 'role'"
+              ><app-role-badge
+                [forTable]="true"
+                [role]="item[column.key]"
+              ></app-role-badge
+            ></span>
+            <span *ngIf="column.key === 'action'">
+              <button class="btn btn-error btn-sm" (click)="onDeleteUser(item)">
+                <i class="fa-solid fa-user-slash"></i>
+              </button>
+            </span>
+            <span *ngIf="column.key !== 'role' && column.title !== 'action'">{{
+              item[column.key]
+            }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </app-data-table>
+    <div class="flex justify-end mt-5">
+      <app-pagination
+        [total]="users.length / pageSize + 1"
+        [(active)]="page"
+        [size]="'md'"
+      ></app-pagination>
+    </div>
+  </div>
+</div>
+
+<dialog #deleteAccountModal class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-xl text-error">
+      {{ "modal.deleteAccount.title" | translate }}
+    </h3>
+    <p class="py-4">
+      {{ "modal.deleteAccount.body" | translate }}
+      <b>{{ selectedUser?.email }}</b>
+    </p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button
+          class="btn btn-error min-w-16 mx-2"
+          (click)="deleteUser(selectedUser?.id)"
+        >
+          {{ "button.yes" | translate }}
+        </button>
+        <button class="btn min-w-16 mx-2">
+          {{ "button.cancel" | translate }}
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>

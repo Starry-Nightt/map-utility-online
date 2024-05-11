@@ -89,5 +89,15 @@
   "map": {
     "locationUnable.title": "You have not granted location access",
     "locationUnable.body": "Please allow location access in your browser"  
+  },
+  "userList": {
+    "create": "Create user",
+    "action": "Actions",
+    "username": "Username",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "id": "ID",
+    "role":"Role"
   }
 }

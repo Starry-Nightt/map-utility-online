@@ -4,10 +4,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import COMPONENTS from './components';
 import DIRECTIVES from './directives';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [...COMPONENTS, ...DIRECTIVES],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    TranslateModule,
+    RouterModule,
+  ],
   exports: [
     ReactiveFormsModule,
     FormsModule,
