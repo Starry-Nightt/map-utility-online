@@ -11,7 +11,10 @@
     "user.account": "Tài khoản người dùng",
     "actions": "Thao tác",
     "request.error": "Có lỗi xảy ra. Vui lòng thử lại",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "map": "Bản đồ",
+    "users": "Quản lý người dùng",
+    "settings": "Cài đặt"
   },
   "page": {
     "home":"Trang chủ",

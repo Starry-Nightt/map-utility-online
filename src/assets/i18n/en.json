@@ -11,7 +11,10 @@
     "user.account": "User account",
     "actions": "Actions",
     "request.error": "Something went wrong. Try again",
-    "search": "Search"
+    "search": "Search",
+    "map": "Map",
+    "users": "Users",
+    "settings": "Settings"
   },
   "page": {
     "home":"Home",

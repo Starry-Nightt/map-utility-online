@@ -5,13 +5,13 @@
       [class.active]="router.url === '/' || router.url === '/map'"
     >
       <i class="fa-solid fa-map-location-dot"></i>
-      <span>Map</span>
+      <span>{{ "common.map" | translate }}</span>
     </a>
   </li>
   <li>
     <a routerLink="/user" [class.active]="router.url.startsWith('/user')">
       <i class="fa-solid fa-users"></i>
-      <span>Users</span>
+      <span>{{ "common.users" | translate }}</span>
     </a>
   </li>
   <li>
@@ -20,7 +20,7 @@
       [class.active]="router.url.startsWith('/profile')"
     >
       <i class="fa-solid fa-gear"></i>
-      <span>Settings</span>
+      <span>{{ "common.settings" | translate }}</span>
     </a>
   </li>
 </ul>
