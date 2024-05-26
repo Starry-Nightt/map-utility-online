@@ -30,7 +30,7 @@
     "changePassword": "Đổi",
     "deleteAccount": "Xóa tài khoản",
     "remove": "Xóa",
-    "clear": "Xóa tất cả"
+    "clear": "Làm mới"
   },
   "field": {
     "username": "Tên đăng nhập",
@@ -83,12 +83,19 @@
     "logout.body": "Bạn có chắc muốn thoát tài khoản ?",
     "deleteAccount.title": "Xóa tài khoản",
     "deleteAccount.body": "Bạn có chắc muốn xóa tài khoản",
-    "clear.title": "Xóa dữ liệu vị trí",
-    "clear.body": "Bạn có chắc muốn xóa toàn bộ dữ liệu bản đồ"
+    "clear.title": "Làm mới bản đồ",
+    "clear.body": "Bạn có chắc muốn xóa dữ liệu đánh dấu bản đồ"
   },
   "map": {
     "locationUnable.title": "Chưa có quyền truy cập vị trí",
-    "locationUnable.body": "Vui lòng cho phép quyền truy cập vị trí trên trình duyệt"  
+    "locationUnable.body": "Vui lòng cho phép quyền truy cập vị trí trên trình duyệt" ,
+    "from": "Từ",
+    "to": "Đến",
+    "placeholder.from": "Điểm bắt đầu",
+    "placeholder.to": "Điểm đến",
+    "location.from": "Điểm bắt đầu",
+    "location.to": "Điểm đến",
+    "location.user": "Vị trí của bạn"  
   },
   "userList": {
     "create": "Thêm người dùng",

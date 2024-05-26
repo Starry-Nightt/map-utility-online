@@ -1,0 +1,101 @@
+<div class="flex gap-4">
+  <div class="flex gap-4" *ngIf="isRoutingModeOn">
+    <div class="relative">
+      <label class="input input-bordered flex items-center gap-2">
+        <input
+          type="text"
+          class="grow"
+          [placeholder]="'map.placeholder.from' | translate"
+          [formControl]="fromKey"
+          (focus)="onShowFromLocationList()"
+        />
+        <span class="badge badge-info">{{ "map.from" | translate }}</span>
+        <button
+          class="btn-ghost btn btn-sm btn-circle"
+          *ngIf="currentFromLocation"
+          (click)="onClearFromLocation()"
+        >
+          <i class="fa-solid fa-xmark opacity-70 text-base"></i>
+        </button>
+      </label>
+      <ng-container
+        [ngTemplateOutlet]="locationList"
+        [ngTemplateOutletContext]="{
+          locations: fromLocations,
+          isShowLocation: isOpeningDropdownFromLocation,
+          currentLocation: currentFromLocation,
+          key: 'from'
+        }"
+      ></ng-container>
+    </div>
+    <div class="relative">
+      <label class="input input-bordered flex items-center gap-2">
+        <input
+          type="text"
+          class="grow"
+          [placeholder]="'map.placeholder.to' | translate"
+          [formControl]="toKey"
+          (focus)="onShowToLocationList()"
+        />
+        <span class="badge badge-info">{{ "map.to" | translate }}</span>
+        <button
+          class="btn-ghost btn btn-sm btn-circle"
+          *ngIf="currentToLocation"
+          (click)="onClearToLocation()"
+        >
+          <i class="fa-solid fa-xmark opacity-70 text-base"></i>
+        </button>
+      </label>
+      <ng-container
+        [ngTemplateOutlet]="locationList"
+        [ngTemplateOutletContext]="{
+          locations: toLocations,
+          isShowLocation: isOpeningDropdownToLocation,
+          currentLocation: currentToLocation,
+          key: 'to'
+        }"
+      ></ng-container>
+    </div>
+    <button
+      class="btn btn-primary"
+      (click)="onRouting()"
+      [disabled]="!currentFromLocation || !currentToLocation"
+    >
+      <i class="fa-solid fa-diamond-turn-right text-lg"></i>
+    </button>
+  </div>
+  <button
+    class="btn"
+    [class.btn-error]="isRoutingModeOn"
+    (click)="toggleRouting()"
+  >
+    <i class="fa-solid fa-xmark text-lg" *ngIf="isRoutingModeOn"></i>
+    <i class="fa-solid fa-route text-lg" *ngIf="!isRoutingModeOn"></i>
+  </button>
+</div>
+
+<ng-template
+  #locationList
+  let-locations="locations"
+  let-isShowLocation="isShowLocation"
+  let-currentLocation="currentLocation"
+  let-key="key"
+>
+  <ul
+    *ngIf="locations.length > 0 && isShowLocation"
+    class="menu bg-base-200 w-fit absolute right-0 top-full translate-y-2 min-w-full rounded-box"
+  >
+    <li *ngFor="let location of locations">
+      <a
+        [class.active]="currentLocation?.name === location.name"
+        (click)="onSelectLocation(location, key)"
+      >
+        <div>
+          <span><i class="fa-solid fa-location-dot mr-4"></i></span>
+
+          <span class="text-base leading-loose">{{ location.name }}</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</ng-template>

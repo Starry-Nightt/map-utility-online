@@ -16,10 +16,22 @@
     >
       <i class="fa-solid fa-location-crosshairs text-2xl"></i>
     </button>
-    <app-map-search-bar
-      (search)="searchLocation($event)"
-      (cancelSearch)="onCancelSearchView()"
-    ></app-map-search-bar>
+    <div
+      class="absolute top-3 right-3 gap-4 flex justify-end"
+      [style]="{ zIndex: 400 }"
+    >
+      <app-map-routing
+        [latLng]="latLng"
+        (selectFrom)="addFromMarker($event)"
+        (selectTo)="addToMarker($event)"
+        (routingEmitter)="drawRouting($event)"
+        (exitRouting)="exitRoutingView()"
+      ></app-map-routing>
+      <app-map-search-bar
+        (search)="searchLocation($event)"
+        (cancelSearch)="onCancelSearchView()"
+      ></app-map-search-bar>
+    </div>
   </div>
 </div>
 

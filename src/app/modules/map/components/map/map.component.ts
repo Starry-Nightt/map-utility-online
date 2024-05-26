@@ -16,6 +16,8 @@ import {
   Coordinates,
   CustomTileLayer,
   GeoJSONData,
+  LocationData,
+  RoutingData,
 } from '@shared/interfaces/map.interface';
 import { FormControl } from '@angular/forms';
 
@@ -37,6 +39,10 @@ export class MapComponent
     className: 'fa-solid fa-location-dot text-3xl text-red-500',
   });
   searchMarker = L.marker([0, 0], { icon: this.searchIcon });
+  latLng: Coordinates = null;
+  fromMarker: L.Marker;
+  toMarker: L.Marker;
+  directedRoute: L.GeoJSON;
 
   @ViewChild('map') mapElement: ElementRef<HTMLDivElement>;
   @ViewChild('clearModal') clearModal: ElementRef;
@@ -59,6 +65,7 @@ export class MapComponent
     this.listenCreateLayer();
     this.listenDeleteLayer();
     this.loadLayer();
+    this.listenOnClickMap();
     this.subscribeUntilDestroy(timer(100), () => {
       this.scrollIntoView();
     });
@@ -166,6 +173,7 @@ export class MapComponent
   listenDeleteLayer() {
     this.map.on('popupopen', (event: L.PopupEvent) => {
       const deleteButton = document.querySelector('.delete-button');
+      if (!deleteButton) return;
       const layerId = deleteButton.getAttribute('data-id');
       deleteButton.addEventListener('click', () => {
         this.subscribeUntilDestroy(
@@ -236,11 +244,66 @@ export class MapComponent
     );
   }
 
+  addFromMarker(location: LocationData) {
+    if (location && location.lat && location.lng) {
+      this.fromMarker = L.marker([Number(location.lat), Number(location.lng)])
+        .bindPopup(`<b>${this.trans('map.location.from')}</b>`)
+        .addTo(this.map);
+    } else {
+      this.map.removeLayer(this.fromMarker);
+    }
+  }
+
+  addToMarker(location: LocationData) {
+    if (location && location.lat && location.lng) {
+      this.toMarker = L.marker([Number(location.lat), Number(location.lng)])
+        .bindPopup(`<b>${this.trans('map.location.to')}</b>`)
+        .addTo(this.map);
+    } else {
+      this.map.removeLayer(this.toMarker);
+    }
+  }
+
+  drawRouting(data: RoutingData) {
+    if (data && data.coordinates) {
+      this.onCancelSearchView();
+      if (this.directedRoute != null) this.map.removeLayer(this.directedRoute);
+      const geoJson: any = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: data,
+          },
+        ],
+      };
+      this.directedRoute = L.geoJSON(geoJson, { style: { weight: 5 } }).addTo(
+        this.map
+      );
+      this.map.fitBounds(this.directedRoute.getBounds());
+    } else {
+      this.map.removeLayer(this.directedRoute);
+    }
+  }
+
   onCancelSearchView() {
     this.searchMarker.remove();
   }
 
   scrollIntoView() {
     this.mapElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  listenOnClickMap() {
+    this.map.on('click', (e) => {
+      this.latLng = e.latlng;
+    });
+  }
+
+  exitRoutingView() {
+    if (this.directedRoute != null) this.map.removeLayer(this.directedRoute);
+    if (!this.fromMarker) this.map.removeLayer(this.fromMarker);
+    if (!this.toMarker) this.map.removeLayer(this.toMarker);
   }
 }

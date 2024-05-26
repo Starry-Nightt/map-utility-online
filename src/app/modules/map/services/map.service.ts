@@ -1,9 +1,14 @@
 import { AuthService } from './../../auth/services/auth.service';
 import { Injectable } from '@angular/core';
 import { HttpService } from '@core/services/http.service';
-import { GeoJSONData, LocationData } from '@shared/interfaces/map.interface';
+import {
+  GeoJSONData,
+  LocationData,
+  RoutingData,
+  RoutingDetail,
+} from '@shared/interfaces/map.interface';
 import { SuccessResponse } from '@shared/interfaces/response';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +37,17 @@ export class MapService {
   }
 
   getLocation(key: string): Observable<SuccessResponse<LocationData[]>> {
-    return this.http.get(`/map/location/${key}`);
+    return this.http.get(`/osm/location/?key=${key}`);
+  }
+
+  getRoute(detail: RoutingDetail): Observable<SuccessResponse<RoutingData>> {
+    return this.http.post('/osm/routing', detail).pipe(
+      map((res: SuccessResponse<any>) => {
+        return {
+          ...res,
+          data: JSON.parse(res.data),
+        };
+      })
+    );
   }
 }

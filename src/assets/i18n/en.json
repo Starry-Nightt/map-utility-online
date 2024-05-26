@@ -86,12 +86,19 @@
     "logout.body": "Are you sure that you want to exit account ?",
     "deleteAccount.title": "Delete account",
     "deleteAccount.body": "Are you sure that you want to delete account",
-    "clear.title": "Delete geo data",
+    "clear.title": "Reset geo data",
     "clear.body": "Are you sure that you want to clear all geo data"
   },
   "map": {
     "locationUnable.title": "You have not granted location access",
-    "locationUnable.body": "Please allow location access in your browser"  
+    "locationUnable.body": "Please allow location access in your browser"  ,
+    "from": "From",
+    "to": "To",
+    "placeholder.from": "Starting location",
+    "placeholder.to": "Destination",
+    "location.from": "Starting location",
+    "location.to": "Destination",
+    "location.user": "Your current location" 
   },
   "userList": {
     "create": "Create user",

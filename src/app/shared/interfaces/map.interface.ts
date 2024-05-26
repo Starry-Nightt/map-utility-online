@@ -57,14 +57,20 @@ export interface Coordinates {
 }
 
 export interface LocationData {
-  id: string;
-  city: string;
-  lat: string;
-  lng: string;
-  country: string;
-  iso2: string;
-  adminName: string;
-  capital: string;
-  population: string;
-  populationProper: string;
+  id?: string;
+  name: string;
+  lat: number | string;
+  lng: number | string;
+}
+
+export interface RoutingDetail {
+  startLat: number;
+  startLng: number;
+  endLat: number;
+  endLng: number;
+}
+
+export interface RoutingData {
+  type: string;
+  coordinates: number[][][];
 }
