@@ -21,6 +21,7 @@
       [style]="{ zIndex: 400 }"
     >
       <app-map-routing
+        #mapRouting
         [latLng]="latLng"
         (selectFrom)="addFromMarker($event)"
         (selectTo)="addToMarker($event)"
@@ -28,6 +29,7 @@
         (exitRouting)="exitRoutingView()"
       ></app-map-routing>
       <app-map-search-bar
+        #mapSearch
         (search)="searchLocation($event)"
         (cancelSearch)="onCancelSearchView()"
       ></app-map-search-bar>

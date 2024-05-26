@@ -20,6 +20,8 @@ import {
   RoutingData,
 } from '@shared/interfaces/map.interface';
 import { FormControl } from '@angular/forms';
+import { MapRoutingComponent } from '../map-routing/map-routing.component';
+import { MapSearchBarComponent } from '../map-search-bar/map-search-bar.component';
 
 @Component({
   selector: 'app-map',
@@ -30,6 +32,8 @@ export class MapComponent
   extends BaseComponent
   implements OnInit, AfterViewInit
 {
+  @ViewChild('mapRouting') mapRoutingComp: MapRoutingComponent;
+  @ViewChild('mapSearch') mapSearchComp: MapSearchBarComponent;
   private map: L.Map;
   private drawnItems: L.FeatureGroup<any>;
   private drawControl: L.Control.Draw;
@@ -298,6 +302,9 @@ export class MapComponent
   listenOnClickMap() {
     this.map.on('click', (e) => {
       this.latLng = e.latlng;
+      this.mapSearchComp.onHideLocation();
+      this.mapRoutingComp.onHideToLocationList();
+      this.mapRoutingComp.onHideFromLocationList();
     });
   }
 

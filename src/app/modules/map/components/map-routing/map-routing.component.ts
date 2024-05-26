@@ -32,12 +32,14 @@ export class MapRoutingComponent extends BaseComponent implements OnInit {
         this.fromKey.setValue(this.currentFromLocation.name, {
           emitEvent: false,
         });
+        this.onHideFromLocationList();
       } else if (this.currentToLocation == null) {
         this.setToLocation({
           name: `${value.lat} ${value.lng}`,
           lat: value.lat,
           lng: value.lng,
         });
+        this.onHideToLocationList();
         this.toKey.setValue(this.currentToLocation.name, { emitEvent: false });
       }
     }
