@@ -1,3 +1,156 @@
-<p>
-  user-create works!
-</p>
+<div class="flex justify-center mt-20">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="w-full max-w-2xl">
+    <div class="flex gap-4">
+      <!-- First name -->
+      <label class="form-control flex-1">
+        <div class="label">
+          <span class="label-text">{{ "field.firstName" | translate }}</span>
+        </div>
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          formControlName="firstName"
+          name="firstName"
+          [placeholder]="'placeholder.firstName' | translate"
+        />
+        <app-form-error-message
+          [control]="firstNameCtrl"
+          [fieldName]="'field.firstName' | translate"
+        ></app-form-error-message>
+      </label>
+      <!-- Last name -->
+      <label class="form-control flex-1">
+        <div class="label">
+          <span class="label-text">{{ "field.lastName" | translate }}</span>
+        </div>
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          formControlName="lastName"
+          name="lastName"
+          [placeholder]="'placeholder.lastName' | translate"
+        />
+        <app-form-error-message
+          [control]="lastNameCtrl"
+          [fieldName]="'field.lastName' | translate"
+        ></app-form-error-message>
+      </label>
+      <!-- Role -->
+      <label class="form-control flex-1">
+        <div class="label">
+          <span class="label-text">{{ "field.role" | translate }}</span>
+        </div>
+        <select
+          class="select select-bordered w-full"
+          formControlName="role"
+          name="role"
+        >
+          <option *ngFor="let role of roles" [value]="role.value">
+            {{ role.name | translate }}
+          </option>
+        </select>
+
+        <app-form-error-message
+          [control]="roleCtrl"
+          [fieldName]="'field.role' | translate"
+        ></app-form-error-message>
+      </label>
+    </div>
+    <div class="flex gap-4">
+      <!-- Email -->
+      <label class="form-control flex-1">
+        <div class="label">
+          <span class="label-text">{{ "field.email" | translate }}</span>
+        </div>
+        <input
+          type="text"
+          [placeholder]="'placeholder.email' | translate"
+          class="input input-bordered w-full"
+          formControlName="email"
+          name="email"
+        />
+        <app-form-error-message
+          [control]="emailCtrl"
+          [fieldName]="'field.email' | translate"
+        ></app-form-error-message>
+      </label>
+      <!-- Username -->
+      <label class="form-control flex-1">
+        <div class="label">
+          <span class="label-text">{{ "field.username" | translate }}</span>
+        </div>
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          formControlName="username"
+          name="username"
+          [placeholder]="'placeholder.username' | translate"
+        />
+        <app-form-error-message
+          [control]="usernameCtrl"
+          [fieldName]="'field.username' | translate"
+        ></app-form-error-message>
+      </label>
+    </div>
+    <!-- Password -->
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text">{{ "field.password" | translate }}</span>
+      </div>
+      <input
+        type="password"
+        [placeholder]="'placeholder.password' | translate"
+        class="input input-bordered w-full"
+        formControlName="password"
+        name="password"
+      />
+      <app-form-error-message
+        [control]="passwordCtrl"
+        [fieldName]="'field.password' | translate"
+      ></app-form-error-message>
+    </label>
+    <!-- Confirm password -->
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text">{{
+          "field.confirmPassword" | translate
+        }}</span>
+      </div>
+      <input
+        type="password"
+        class="input input-bordered w-full"
+        formControlName="confirmPassword"
+        name="confirmPassword"
+        [placeholder]="'placeholder.confirmPassword' | translate"
+      />
+      <app-form-error-message
+        [control]="confirmPasswordCtrl"
+        [fieldName]="'field.confirmPassword' | translate"
+      ></app-form-error-message>
+    </label>
+    <div
+      class="label"
+      *ngIf=" form.errors?.['passwordMismatch'] && passwordCtrl.valid && confirmPasswordCtrl.valid"
+    >
+      <span class="label-text-alt text-red-500 ml-1">{{
+        "validator.passwordMismatch" | translate
+      }}</span>
+    </div>
+    <div class="flex justify-between items-center">
+      <button
+        class="btn btn-neutral uppercase mt-4"
+        type="button"
+        (click)="back()"
+      >
+        {{ "button.back" | translate }}
+      </button>
+      <button
+        class="btn btn-primary uppercase mt-4 min-w-40"
+        [disabled]="form.invalid"
+        type="submit"
+      >
+        {{ "userList.create.user" | translate }}
+      </button>
+    </div>
+  </form>
+</div>

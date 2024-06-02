@@ -4,7 +4,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ComponentService } from '../../services/component.service';
 import { StorageService } from '../../services/storage.service';
-import { ErrorResponse, SuccessResponse } from '@shared/interfaces/response';
+import {
+  ErrorResponse,
+  ListSuccessResponse,
+  SuccessResponse,
+} from '@shared/interfaces/response';
 
 @Component({
   selector: 'app-base',
@@ -20,7 +24,7 @@ export class BaseComponent {
 
   subscribeUntilDestroy(
     observable$: Observable<any>,
-    callback: (res: SuccessResponse<any>) => any,
+    callback: (res: any) => any,
     error?: (param?: ErrorResponse) => any
   ) {
     return observable$

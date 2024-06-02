@@ -14,7 +14,9 @@
     "search": "Tìm kiếm",
     "map": "Bản đồ",
     "users": "Quản lý người dùng",
-    "settings": "Cài đặt"
+    "settings": "Cài đặt",
+    "user": "Người dùng",
+    "admin": "Quản trị viên"
   },
   "page": {
     "home":"Trang chủ",
@@ -56,7 +58,8 @@
     "confirmPassword": "Xác nhận mật khẩu",
     "firstName": "Paul",
     "lastName": "Allen",
-    "username": "example.user" 
+    "username": "example.user",
+    "role": "Chọn quyền" 
   },
   "auth": {
     "login": "Đăng nhập",
@@ -105,6 +108,7 @@
     "firstName": "Tên",
     "lastName": "Họ",
     "id": "ID",
-    "role": "Quyền"
+    "role": "Quyền",
+    "create.user": "Tạo người dùng"
   }
 }

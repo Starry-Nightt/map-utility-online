@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import COMPONENTS from './components';
 import DIRECTIVES from './directives';
 import { RouterModule } from '@angular/router';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [...COMPONENTS, ...DIRECTIVES],
@@ -14,10 +15,12 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     TranslateModule,
     RouterModule,
+    NgxDatatableModule,
   ],
   exports: [
     ReactiveFormsModule,
     FormsModule,
+    NgxDatatableModule,
     ...COMPONENTS,
     TranslateModule,
     ...DIRECTIVES,

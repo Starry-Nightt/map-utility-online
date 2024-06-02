@@ -1,13 +1,15 @@
-<div class="p-5 mt-10 flex gap-5 flex-col">
+<form class="p-5 mt-10 flex gap-5 flex-col" [formGroup]="form">
   <div class="flex justify-between">
     <label class="input input-bordered flex items-center gap-2 w-full max-w-sm">
       <input
         type="text"
         class="grow"
         [placeholder]="'common.search' | translate"
+        formControlName="key"
+        (keyup.enter)="searchUser()"
       />
       <div class="flex gap-1">
-        <button class="btn-ghost btn btn-sm btn-circle">
+        <button class="btn-ghost btn btn-sm btn-circle" (click)="searchUser()">
           <i class="fa-solid fa-magnifying-glass text-base opacity-70"></i>
         </button>
       </div>
@@ -16,38 +18,76 @@
       {{ "userList.create" | translate }}
     </button>
   </div>
-  <div *ngIf="users$ | async as users">
-    <app-data-table [columns]="columns" [values]="users" class="min-h-96">
-      <ng-template #body let-item let-columns="columns">
-        <tr>
-          <td *ngFor="let column of columns">
-            <span *ngIf="column.key === 'role'"
-              ><app-role-badge
-                [forTable]="true"
-                [role]="item[column.key]"
-              ></app-role-badge
-            ></span>
-            <span *ngIf="column.key === 'action'">
-              <button class="btn btn-error btn-sm" (click)="onDeleteUser(item)">
-                <i class="fa-solid fa-user-slash"></i>
-              </button>
-            </span>
-            <span *ngIf="column.key !== 'role' && column.title !== 'action'">{{
-              item[column.key]
-            }}</span>
-          </td>
-        </tr>
-      </ng-template>
-    </app-data-table>
-    <div class="flex justify-end mt-5">
-      <app-pagination
-        [total]="users.length / pageSize + 1"
-        [(active)]="page"
-        [size]="'md'"
-      ></app-pagination>
-    </div>
+  <div>
+    <ngx-datatable
+      #table
+      class="material striped"
+      [rows]="rows"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [loadingIndicator]="loadingIndicator"
+      [limit]="pageSize"
+      [count]="total"
+      [externalPaging]="true"
+      (page)="setPage($event)"
+    >
+      <ngx-datatable-column prop="username" [sortable]="false">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <span class="tableHeader">{{ "userList.username" | translate }}</span>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span>{{ row.username }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="firstName" [sortable]="false">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <span>{{ "userList.firstName" | translate }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="lastName" [sortable]="false">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <span>{{ "userList.lastName" | translate }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="email" [sortable]="false">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <span>{{ "userList.email" | translate }}</span>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <app-text-copy [text]="row.email"></app-text-copy>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="role" [sortable]="false">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <span>{{ "userList.role" | translate }}</span>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <app-role-badge [forTable]="true" [role]="row.role"></app-role-badge>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column>
+        <ng-template
+          let-column="column"
+          ngx-datatable-header-template
+          [sortable]="false"
+        >
+          <span>{{ "userList.action" | translate }}</span>
+        </ng-template>
+        <ng-template
+          let-row="row"
+          ngx-datatable-cell-template
+          [sortable]="false"
+        >
+          <button class="btn btn-error btn-sm" (click)="onDeleteUser(row)">
+            <i class="fa-solid fa-user-slash"></i>
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
   </div>
-</div>
+</form>
 
 <dialog #deleteAccountModal class="modal">
   <div class="modal-box">

@@ -20,6 +20,7 @@
     "@angular/router": "^14.2.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@swimlane/ngx-datatable": "^20.1.0",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
     "ngx-toastr": "^14.3.0",

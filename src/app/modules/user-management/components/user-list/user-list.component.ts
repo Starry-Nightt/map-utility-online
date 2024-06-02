@@ -1,9 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BaseComponent } from '@core/components/base/base.component';
 import { ComponentService } from '@core/services/component.service';
 import { UserService } from '@modules/user-management/services/user.service';
+import { PaginateQuery } from '@shared/interfaces/common.interface';
+import { ListSuccessResponse } from '@shared/interfaces/response';
 import { UserInfo } from '@shared/interfaces/user.interface';
-import { Observable, filter, map } from 'rxjs';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { Observable, filter, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -12,26 +16,40 @@ import { Observable, filter, map } from 'rxjs';
 })
 export class UserListComponent extends BaseComponent implements OnInit {
   @ViewChild('deleteAccountModal') deleteAccountModal: ElementRef;
-  pageSize: number = 10;
-  page: number = 1;
-  users$: Observable<UserInfo[]>;
+  @ViewChild(DatatableComponent) table!: DatatableComponent;
+  loadingIndicator: boolean = false;
+  form = this.fb.group({
+    page: [1, [Validators.required]],
+    pageSize: [10, [Validators.required]],
+    key: [''],
+  });
   selectedUser: UserInfo = null;
-  columns = [
-    { title: 'userList.id', key: 'id' },
-    { title: 'userList.username', key: 'username' },
-    { title: 'userList.email', key: 'email' },
-    { title: 'userList.firstName', key: 'firstName' },
-    { title: 'userList.lastName', key: 'lastName' },
-    { title: 'userList.role', key: 'role' },
-    { title: 'userList.action', key: 'action' },
-  ];
+  rows: UserInfo[] = [];
+  total: number = 0;
 
-  constructor(service: ComponentService, public userService: UserService) {
+  constructor(
+    service: ComponentService,
+    public userService: UserService,
+    private fb: FormBuilder
+  ) {
     super(service);
   }
 
   ngOnInit() {
     this.getUsers();
+    this.subscribeUntilDestroy(
+      this.form.get('page').valueChanges.pipe(
+        switchMap((res) =>
+          this.userService.paginate({
+            ...this.form.value,
+            page: res,
+          } as PaginateQuery)
+        )
+      ),
+      (res) => {
+        this.rows = res.data;
+      }
+    );
   }
 
   onCreateUser() {
@@ -44,9 +62,25 @@ export class UserListComponent extends BaseComponent implements OnInit {
   }
 
   getUsers() {
-    this.users$ = this.userService.getAll().pipe(
-      filter((res) => res.success),
-      map((res) => res.data)
+    this.subscribeUntilDestroy(
+      this.userService.paginate(this.form.value as PaginateQuery),
+      (res: ListSuccessResponse<UserInfo>) => {
+        this.rows = res.data;
+        this.total = res.total;
+      }
+    );
+  }
+
+  searchUser() {
+    this.subscribeUntilDestroy(
+      this.userService.paginate({
+        ...this.form.value,
+        page: 1,
+      } as PaginateQuery),
+      (res: ListSuccessResponse<UserInfo>) => {
+        this.rows = res.data;
+        this.total = res.total;
+      }
     );
   }
 
@@ -68,5 +102,13 @@ export class UserListComponent extends BaseComponent implements OnInit {
         );
       }
     );
+  }
+
+  get pageSize() {
+    return this.form.get('pageSize').value;
+  }
+
+  setPage(value: any) {
+    this.form.get('page').setValue(value.offset + 1);
   }
 }

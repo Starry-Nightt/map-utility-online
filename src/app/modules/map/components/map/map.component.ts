@@ -47,6 +47,7 @@ export class MapComponent
   fromMarker: L.Marker;
   toMarker: L.Marker;
   directedRoute: L.GeoJSON;
+  viewZoomDefault: number = 12;
 
   @ViewChild('map') mapElement: ElementRef<HTMLDivElement>;
   @ViewChild('clearModal') clearModal: ElementRef;
@@ -227,7 +228,7 @@ export class MapComponent
   }
 
   searchLocation(coordinate: Coordinates) {
-    this.map.setView([coordinate.lat, coordinate.lng], 12);
+    this.map.setView([coordinate.lat, coordinate.lng], this.viewZoomDefault);
     this.searchMarker.setLatLng([coordinate.lat, coordinate.lng]);
     this.searchMarker.addTo(this.map);
   }
@@ -253,6 +254,10 @@ export class MapComponent
       this.fromMarker = L.marker([Number(location.lat), Number(location.lng)])
         .bindPopup(`<b>${this.trans('map.location.from')}</b>`)
         .addTo(this.map);
+      this.map.setView(
+        [Number(location.lat), Number(location.lng)],
+        this.viewZoomDefault
+      );
     } else {
       this.map.removeLayer(this.fromMarker);
     }
@@ -263,6 +268,10 @@ export class MapComponent
       this.toMarker = L.marker([Number(location.lat), Number(location.lng)])
         .bindPopup(`<b>${this.trans('map.location.to')}</b>`)
         .addTo(this.map);
+      this.map.setView(
+        [Number(location.lat), Number(location.lng)],
+        this.viewZoomDefault
+      );
     } else {
       this.map.removeLayer(this.toMarker);
     }

@@ -15,3 +15,9 @@ export interface LoginSuccessResponse {
   success: boolean;
   token: string;
 }
+
+export interface ListSuccessResponse<T> {
+  success: boolean;
+  data?: T[];
+  total: number;
+}
