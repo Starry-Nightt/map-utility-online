@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, finalize, takeUntil } from 'rxjs';
 import { ComponentService } from '../../services/component.service';
 import { StorageService } from '../../services/storage.service';
 import {
@@ -17,6 +17,7 @@ import {
 })
 export class BaseComponent {
   private destroy$ = new Subject<void>();
+  loading: boolean = false;
   constructor(public componentService: ComponentService) {
     this.translate.setDefaultLang('en');
     this.translate.use(this.localStorage.getItem('lang') || 'en');
@@ -27,8 +28,12 @@ export class BaseComponent {
     callback: (res: any) => any,
     error?: (param?: ErrorResponse) => any
   ) {
+    this.loading = true;
     return observable$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => (this.loading = false))
+      )
       .subscribe(callback, error);
   }
 

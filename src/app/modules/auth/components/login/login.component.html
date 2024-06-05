@@ -36,13 +36,14 @@
           [fieldName]="'field.password' | translate"
         ></app-form-error-message>
       </label>
-      <button
-        class="btn btn-primary uppercase mt-4 w-full"
+      <app-async-button
+        [class]="'btn btn-primary uppercase mt-4 w-full'"
         [disabled]="form.invalid"
-        type="submit"
+        [type]="'submit'"
+        [loading]="loading"
       >
         Sign in
-      </button>
+      </app-async-button>
       <div class="mt-4">
         {{ "auth.notAMember" | translate }}
         <a routerLink="/auth/register" class="link-primary">{{

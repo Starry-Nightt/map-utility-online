@@ -116,13 +116,14 @@
           "validator.passwordMismatch" | translate
         }}</span>
       </div>
-      <button
-        class="btn btn-primary uppercase mt-4 w-full"
+      <app-async-button
+        [class]="'btn btn-primary uppercase mt-4 w-full'"
         [disabled]="form.invalid"
-        type="submit"
+        [type]="'submit'"
+        [loading]="loading"
       >
         Sign up
-      </button>
+      </app-async-button>
       <div class="mt-3">
         {{ "auth.alreadyMember" | translate }}
         <a routerLink="/auth/login" class="link-primary">{{

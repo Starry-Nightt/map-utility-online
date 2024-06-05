@@ -119,9 +119,13 @@
       </button>
     </ng-container>
     <ng-container *ngIf="isEdit">
-      <button class="btn btn-neutral min-w-20 text-base" type="submit">
+      <app-async-button
+        [class]="'btn btn-neutral min-w-20 text-base'"
+        [type]="'submit'"
+        [loading]="loading"
+      >
         {{ "button.save" | translate }}
-      </button>
+      </app-async-button>
       <button
         class="btn btn-ghost min-w-20 text-base"
         type="button"

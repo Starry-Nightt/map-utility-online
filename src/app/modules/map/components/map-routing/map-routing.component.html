@@ -56,13 +56,14 @@
         }"
       ></ng-container>
     </div>
-    <button
-      class="btn btn-primary"
+    <app-async-button
+      [class]="'btn btn-primary'"
       (click)="onRouting()"
       [disabled]="!currentFromLocation || !currentToLocation"
+      [loading]="loading"
     >
-      <i class="fa-solid fa-diamond-turn-right text-lg"></i>
-    </button>
+      <i *ngIf="!loading" class="fa-solid fa-diamond-turn-right text-lg"></i>
+    </app-async-button>
   </div>
   <button
     class="btn"

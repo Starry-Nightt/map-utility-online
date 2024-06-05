@@ -1,4 +1,5 @@
 import { AdminMenuComponent } from './admin-menu/admin-menu.component';
+import { AsyncButtonComponent } from './async-button/async-button.component';
 import { FormErrorMessageComponent } from './form-error-message/form-error-message.component';
 import { LangSelectComponent } from './lang-select/lang-select.component';
 import { LogoComponent } from './logo/logo.component';
@@ -14,6 +15,7 @@ const COMPONENTS = [
   UserAvatarMenuComponent,
   AdminMenuComponent,
   RoleBadgeComponent,
+  AsyncButtonComponent,
 ];
 
 export default COMPONENTS;

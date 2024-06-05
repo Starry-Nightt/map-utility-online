@@ -254,10 +254,7 @@ export class MapComponent
       this.fromMarker = L.marker([Number(location.lat), Number(location.lng)])
         .bindPopup(`<b>${this.trans('map.location.from')}</b>`)
         .addTo(this.map);
-      this.map.setView(
-        [Number(location.lat), Number(location.lng)],
-        this.viewZoomDefault
-      );
+      this.map.setView([Number(location.lat), Number(location.lng)]);
     } else {
       this.map.removeLayer(this.fromMarker);
     }
@@ -268,10 +265,7 @@ export class MapComponent
       this.toMarker = L.marker([Number(location.lat), Number(location.lng)])
         .bindPopup(`<b>${this.trans('map.location.to')}</b>`)
         .addTo(this.map);
-      this.map.setView(
-        [Number(location.lat), Number(location.lng)],
-        this.viewZoomDefault
-      );
+      this.map.setView([Number(location.lat), Number(location.lng)]);
     } else {
       this.map.removeLayer(this.toMarker);
     }

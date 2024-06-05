@@ -144,13 +144,14 @@
       >
         {{ "button.back" | translate }}
       </button>
-      <button
-        class="btn btn-primary uppercase mt-4 min-w-40"
+      <app-async-button
+        [class]="'btn btn-primary uppercase mt-4 min-w-40'"
         [disabled]="form.invalid"
-        type="submit"
+        [type]="'submit'"
+        [loading]="loading"
       >
         {{ "userList.create.user" | translate }}
-      </button>
+      </app-async-button>
     </div>
   </form>
 </div>
