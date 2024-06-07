@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { BaseComponent } from '@core/components/base/base.component';
 import { ComponentService } from '@core/services/component.service';
@@ -9,14 +16,23 @@ import {
   RoutingData,
 } from '@shared/interfaces/map.interface';
 import { RoutingType } from '@shared/utilities/enums';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-map-routing',
   templateUrl: './map-routing.component.html',
   styleUrls: ['./map-routing.component.css'],
 })
-export class MapRoutingComponent extends BaseComponent implements OnInit {
+export class MapRoutingComponent
+  extends BaseComponent
+  implements OnInit, OnDestroy
+{
   private _latLng?: Coordinates = null;
   @Input() get latLng(): Coordinates {
     return this._latLng;
@@ -64,6 +80,7 @@ export class MapRoutingComponent extends BaseComponent implements OnInit {
   routingForCar: boolean = true;
   routingForWalking: boolean = false;
   distance: number = null;
+  routingSubscription: Subscription;
   constructor(service: ComponentService, public mapService: MapService) {
     super(service);
   }
@@ -100,24 +117,27 @@ export class MapRoutingComponent extends BaseComponent implements OnInit {
     if (!this.currentToLocation) {
       return;
     }
-    this.subscribeUntilDestroy(
-      this.mapService.getRoute({
+
+    this.routingSubscription?.unsubscribe();
+    this.routingSubscription = this.mapService
+      .getRoute({
         startLat: Number(this.currentFromLocation.lat),
         startLng: Number(this.currentFromLocation.lng),
         endLat: Number(this.currentToLocation.lat),
         endLng: Number(this.currentToLocation.lng),
         type: this.routingForCar ? RoutingType.VEHICLE : RoutingType.WALK,
-      }),
-      (res) => {
-        this.routingEmitter.emit(res.data);
-        this.distance = res.data?.distance;
-      },
-      (err: any) => {
-        if (err.error?.Message == "Column 'geom' is null.")
-          this.showError(this.trans('map.notFound.route'));
-        else this.showError(this.trans('common.error'));
-      }
-    );
+      })
+      .subscribe(
+        (res) => {
+          this.routingEmitter.emit(res.data);
+          this.distance = res.data?.distance;
+        },
+        (err: any) => {
+          if (err.error?.Message == "Column 'geom' is null.")
+            this.showError(this.trans('map.notFound.route'));
+          else this.showError(this.trans('common.error'));
+        }
+      );
   }
 
   toggleRouting() {
@@ -223,5 +243,9 @@ export class MapRoutingComponent extends BaseComponent implements OnInit {
     this.routingForCar = false;
     this.routingForWalking = true;
     this.onRouting();
+  }
+
+  override ngOnDestroy(): void {
+    this.routingSubscription?.unsubscribe();
   }
 }
