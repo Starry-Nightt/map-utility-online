@@ -16,3 +16,8 @@ export enum LayerType {
   CircleMarker = 'circlemarker',
   Line = 'polyline',
 }
+
+export enum RoutingType {
+  WALK = 'walk',
+  VEHICLE = 'vehicle',
+}

@@ -1,5 +1,27 @@
 <div class="flex gap-4">
   <div class="flex gap-4" *ngIf="isRoutingModeOn">
+    <div
+      class="badge badge-secondary badge-lg"
+      *ngIf="currentFromLocation && currentToLocation && distance"
+    >
+      {{ distance.toFixed(2) }} km
+    </div>
+    <div class="join">
+      <button
+        class="btn join-item"
+        [class.btn-primary]="routingForCar"
+        (click)="onRoutingForCar()"
+      >
+        <i class="fa-solid fa-car"></i>
+      </button>
+      <button
+        class="btn join-item"
+        [class.btn-primary]="routingForWalking"
+        (click)="onRoutingForWalking()"
+      >
+        <i class="fa-solid fa-person-walking"></i>
+      </button>
+    </div>
     <div class="relative">
       <label class="input input-bordered flex items-center gap-2">
         <input

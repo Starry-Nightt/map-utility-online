@@ -271,8 +271,9 @@ export class MapComponent
     }
   }
 
-  drawRouting(data: RoutingData) {
-    if (data && data.coordinates) {
+  drawRouting(routingData: RoutingData) {
+    const geo = routingData.geo;
+    if (geo && geo.coordinates) {
       this.onCancelSearchView();
       if (this.directedRoute != null) this.map.removeLayer(this.directedRoute);
       const geoJson: any = {
@@ -281,13 +282,17 @@ export class MapComponent
           {
             type: 'Feature',
             properties: {},
-            geometry: data,
+            geometry: geo,
           },
         ],
       };
-      this.directedRoute = L.geoJSON(geoJson, { style: { weight: 5 } }).addTo(
-        this.map
-      );
+      this.directedRoute = L.geoJSON(geoJson, { style: { weight: 5 } })
+        .bindPopup(
+          `<b>${this.trans('map.distance', {
+            distance: routingData.distance.toFixed(2),
+          })}</b>`
+        )
+        .addTo(this.map);
       this.map.fitBounds(this.directedRoute.getBounds());
     } else {
       this.map.removeLayer(this.directedRoute);

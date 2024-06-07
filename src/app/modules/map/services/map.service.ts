@@ -45,7 +45,10 @@ export class MapService {
       map((res: SuccessResponse<any>) => {
         return {
           ...res,
-          data: JSON.parse(res.data),
+          data: {
+            ...res.data,
+            geo: JSON.parse(res.data?.geo),
+          },
         };
       })
     );

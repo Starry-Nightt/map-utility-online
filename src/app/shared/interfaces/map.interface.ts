@@ -1,3 +1,4 @@
+import { RoutingType } from '@shared/utilities/enums';
 import { TileLayer } from 'leaflet';
 
 export interface GeoJSONData {
@@ -61,6 +62,10 @@ export interface LocationData {
   name: string;
   lat: number | string;
   lng: number | string;
+  amenity?: string;
+  houseName?: string;
+  houseNumber?: string;
+  place?: string;
 }
 
 export interface RoutingDetail {
@@ -68,9 +73,13 @@ export interface RoutingDetail {
   startLng: number;
   endLat: number;
   endLng: number;
+  type: RoutingType;
 }
 
 export interface RoutingData {
-  type: string;
-  coordinates: number[][][];
+  geo: {
+    type: string;
+    coordinates: number[][][];
+  };
+  distance: number;
 }

@@ -48,7 +48,7 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
   searchLocation(
     latitude: string | number,
     longitude: string | number,
-    name?: string
+    location: LocationData
   ) {
     const lat = Number(latitude);
     const lng = Number(longitude);
@@ -56,11 +56,15 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
       const result: Coordinates = { lat, lng };
       this.search.emit(result);
       this.isSearchView = true;
-      if (name && name.length) {
-        this.searchKey.setValue(name, { emitEvent: false });
-        this.currentLocation = this.locations.find((it) => it.name === name);
+      if (location.name && location.name.length) {
+        this.searchKey.setValue(this.getFullLocationName(location), {
+          emitEvent: false,
+        });
+        this.currentLocation = this.locations.find(
+          (it) => it.id === location.id
+        );
         if (
-          this.lastSearchLocation.every((it) => it.name !== name) ||
+          this.lastSearchLocation.every((it) => it.id !== location.id) ||
           this.lastSearchLocation.length == 0
         ) {
           this.lastSearchLocation.unshift(this.currentLocation);
@@ -77,15 +81,23 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
     if (key.trim().length == 0) return;
     const [lat, lng] = key.split(' ');
     if (isNumber(lat) && isNumber(lng)) {
-      this.searchLocation(lat, lng);
+      this.searchLocationByCoordinates(lat, lng);
       return;
     }
-    if (this.locations.length == 0) return;
-    this.searchLocation(
-      this.locations[0].lat,
-      this.locations[0].lng,
-      this.locations[0].name
-    );
+  }
+
+  searchLocationByCoordinates(
+    latitude: string | number,
+    longitude: string | number
+  ) {
+    const lat = Number(latitude);
+    const lng = Number(longitude);
+    if (lat && lng && isNumber(lat) && isNumber(lng)) {
+      const result: Coordinates = { lat, lng };
+      this.search.emit(result);
+      this.isSearchView = true;
+      this.onHideLocation();
+    }
   }
 
   onCancelSearchView() {
@@ -106,5 +118,26 @@ export class MapSearchBarComponent extends BaseComponent implements OnInit {
 
   onHideLocation() {
     this.isShowLocation = false;
+  }
+
+  getFullLocationName(location: LocationData) {
+    if (location == null) return '';
+    const houseName = location.houseName
+      ? ` - ${this.trans('map.house.name') + ' ' + location.houseName}`
+      : '';
+    const houseNumber = location.houseNumber
+      ? ` - ${this.trans('map.house.number') + ' ' + location.houseNumber}`
+      : '';
+    return location.name + houseNumber + houseName;
+  }
+
+  getPlace(location: LocationData) {
+    if (!location.place) return '';
+    return this.trans(`place.${location.place}`);
+  }
+
+  getAmenity(location: LocationData) {
+    if (!location.amenity) return '';
+    return this.trans(`amenity.${location.amenity}`);
   }
 }

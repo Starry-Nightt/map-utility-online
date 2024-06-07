@@ -30,23 +30,44 @@
   >
     <li *ngFor="let location of locations">
       <a
-        (click)="searchLocation(location.lat, location.lng, location.name)"
-        [class.active]="currentLocation?.name === location.name"
+        (click)="searchLocation(location.lat, location.lng, location)"
+        [class.active]="currentLocation?.id === location.id"
+        class="block"
       >
-        <div>
-          <span
-            ><i
-              class="fa-solid fa-location-dot mr-4"
-              *ngIf="!isSearchRecently(location)"
-            ></i
-          ></span>
-          <span
-            ><i
-              class="fa-regular fa-clock mr-4"
-              *ngIf="isSearchRecently(location)"
-            ></i
-          ></span>
-          <span class="text-base leading-loose">{{ location.name }}</span>
+        <div class="flex justify-between items-center">
+          <div>
+            <span
+              ><i
+                class="fa-solid fa-location-dot mr-4"
+                *ngIf="!isSearchRecently(location)"
+              ></i
+            ></span>
+            <span
+              ><i
+                class="fa-regular fa-clock mr-4"
+                *ngIf="isSearchRecently(location)"
+              ></i
+            ></span>
+            <span class="text-base leading-loose">{{
+              getFullLocationName(location)
+            }}</span>
+          </div>
+          <div class="flex">
+            <div
+              class="badge badge-ghost capitalize"
+              *ngIf="location.place"
+              [style]="{ whiteSpace: 'nowrap' }"
+            >
+              {{ getPlace(location) }}
+            </div>
+            <div
+              class="badge badge-accent capitalize"
+              *ngIf="location.amenity"
+              [style]="{ whiteSpace: 'nowrap' }"
+            >
+              {{ getAmenity(location) }}
+            </div>
+          </div>
         </div>
       </a>
     </li>
@@ -58,10 +79,33 @@
     class="menu bg-base-200 absolute right-0 top-full translate-y-2 w-96 rounded-box"
   >
     <li *ngFor="let location of lastSearchLocation">
-      <a (click)="searchLocation(location.lat, location.lng, location.name)">
-        <div>
-          <span><i class="fa-regular fa-clock mr-4"></i></span>
-          <span class="text-base leading-loose">{{ location.name }}</span>
+      <a
+        (click)="searchLocation(location.lat, location.lng, location)"
+        class="block"
+      >
+        <div class="flex justify-between items-center">
+          <div>
+            <span><i class="fa-regular fa-clock mr-4"></i></span>
+            <span class="text-base leading-loose">{{
+              getFullLocationName(location)
+            }}</span>
+          </div>
+          <div class="flex">
+            <div
+              class="badge badge-ghost capitalize"
+              *ngIf="location.place"
+              [style]="{ whiteSpace: 'nowrap' }"
+            >
+              {{ getPlace(location) }}
+            </div>
+            <div
+              class="badge badge-accent capitalize"
+              *ngIf="location.amenity"
+              [style]="{ whiteSpace: 'nowrap' }"
+            >
+              {{ getAmenity(location) }}
+            </div>
+          </div>
         </div>
       </a>
     </li>

@@ -8,6 +8,7 @@ import {
   LocationData,
   RoutingData,
 } from '@shared/interfaces/map.interface';
+import { RoutingType } from '@shared/utilities/enums';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
@@ -60,7 +61,9 @@ export class MapRoutingComponent extends BaseComponent implements OnInit {
   currentFromLocation: LocationData = null;
   currentToLocation: LocationData = null;
   userLocation: LocationData = null;
-
+  routingForCar: boolean = true;
+  routingForWalking: boolean = false;
+  distance: number = null;
   constructor(service: ComponentService, public mapService: MapService) {
     super(service);
   }
@@ -103,12 +106,16 @@ export class MapRoutingComponent extends BaseComponent implements OnInit {
         startLng: Number(this.currentFromLocation.lng),
         endLat: Number(this.currentToLocation.lat),
         endLng: Number(this.currentToLocation.lng),
+        type: this.routingForCar ? RoutingType.VEHICLE : RoutingType.WALK,
       }),
       (res) => {
         this.routingEmitter.emit(res.data);
+        this.distance = res.data?.distance;
       },
-      () => {
-        this.showError(this.trans('common.error'));
+      (err: any) => {
+        if (err.error?.Message == "Column 'geom' is null.")
+          this.showError(this.trans('map.notFound.route'));
+        else this.showError(this.trans('common.error'));
       }
     );
   }
@@ -202,5 +209,19 @@ export class MapRoutingComponent extends BaseComponent implements OnInit {
     } else {
       this.toLocations = [];
     }
+  }
+
+  onRoutingForCar() {
+    if (this.routingForCar) return;
+    this.routingForCar = true;
+    this.routingForWalking = false;
+    this.onRouting();
+  }
+
+  onRoutingForWalking() {
+    if (this.routingForWalking) return;
+    this.routingForCar = false;
+    this.routingForWalking = true;
+    this.onRouting();
   }
 }
