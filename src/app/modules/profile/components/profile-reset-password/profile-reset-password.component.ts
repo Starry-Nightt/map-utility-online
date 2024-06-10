@@ -85,9 +85,6 @@ export class ProfileResetPasswordComponent
         );
         this.form.reset();
         this.authService.removeResetPasswordToken();
-        this.authService.logout().subscribe(() => {
-          this.redirect('auth/login');
-        });
       },
       (error) => {
         this.showError(
