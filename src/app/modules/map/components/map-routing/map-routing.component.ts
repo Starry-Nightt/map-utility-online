@@ -21,6 +21,7 @@ import {
   Subscription,
   debounceTime,
   distinctUntilChanged,
+  finalize,
   switchMap,
 } from 'rxjs';
 
@@ -119,6 +120,7 @@ export class MapRoutingComponent
     }
 
     this.routingSubscription?.unsubscribe();
+    this.loading = true;
     this.routingSubscription = this.mapService
       .getRoute({
         startLat: Number(this.currentFromLocation.lat),
@@ -127,6 +129,7 @@ export class MapRoutingComponent
         endLng: Number(this.currentToLocation.lng),
         type: this.routingForCar ? RoutingType.VEHICLE : RoutingType.WALK,
       })
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         (res) => {
           this.routingEmitter.emit(res.data);
