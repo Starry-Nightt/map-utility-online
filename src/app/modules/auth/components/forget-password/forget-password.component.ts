@@ -3,18 +3,19 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { BaseComponent } from '@core/components/base/base.component';
 import { ComponentService } from '@core/services/component.service';
 import { AuthService } from '@modules/auth/services/auth.service';
-import { LoginDetail } from '@shared/interfaces/auth.interface';
+import { ForgetPasswordDetail } from '@shared/interfaces/auth.interface';
+import { timer } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-forget-password',
+  templateUrl: './forget-password.component.html',
+  styleUrls: ['./forget-password.component.css'],
 })
-export class LoginComponent extends BaseComponent implements OnInit {
+export class ForgetPasswordComponent extends BaseComponent implements OnInit {
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
   });
+
   constructor(
     public service: ComponentService,
     public fb: FormBuilder,
@@ -26,15 +27,11 @@ export class LoginComponent extends BaseComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    const formValue = this.form.value;
     this.subscribeUntilDestroy(
-      this.authService.login(formValue as LoginDetail),
-      () => {
-        this.showSuccess(
-          this.trans('common.success'),
-          this.trans('auth.login.success')
-        );
-        this.redirect(this.authService.redirectUrl ?? '/');
+      this.authService.forgetPassword(this.form.value as ForgetPasswordDetail),
+      (res) => {
+        this.authService.setResetPasswordToken(res.data);
+        this.redirect('/auth/reset-password');
       },
       (error) => {
         this.showError(
@@ -47,9 +44,5 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   get emailCtrl() {
     return this.form.get('email');
-  }
-
-  get passwordCtrl() {
-    return this.form.get('password');
   }
 }

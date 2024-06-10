@@ -6,6 +6,9 @@ import { ProfileUserComponent } from './components/profile-user/profile-user.com
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfilePasswordComponent } from './components/profile-password/profile-password.component';
+import { ProfileResetPasswordComponent } from './components/profile-reset-password/profile-reset-password.component';
+import { ResetPasswordComponent } from '@modules/auth/components/reset-password/reset-password.component';
+import { AuthModule } from '@modules/auth/auth.module';
 
 @NgModule({
   imports: [CommonModule, SharedModule, ProfileRoutingModule],
@@ -14,6 +17,7 @@ import { ProfilePasswordComponent } from './components/profile-password/profile-
     ProfileUserComponent,
     ProfileSettingsComponent,
     ProfilePasswordComponent,
+    ProfileResetPasswordComponent,
   ],
 })
 export class ProfileModule {}

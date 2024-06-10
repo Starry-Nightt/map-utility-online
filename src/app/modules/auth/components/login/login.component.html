@@ -44,11 +44,18 @@
       >
         Sign in
       </app-async-button>
-      <div class="mt-4">
-        {{ "auth.notAMember" | translate }}
-        <a routerLink="/auth/register" class="link-primary">{{
-          "auth.register" | translate
-        }}</a>
+      <div class="flex justify-between mt-4">
+        <span>
+          {{ "auth.notAMember" | translate }}
+          <a routerLink="/auth/register" class="link-primary">{{
+            "auth.register" | translate
+          }}</a>
+        </span>
+        <span>
+          <a routerLink="/auth/forget-password" class="link-primary">{{
+            "auth.forget_password" | translate
+          }}</a>
+        </span>
       </div>
     </form>
   </div>

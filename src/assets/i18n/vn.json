@@ -16,7 +16,9 @@
     "users": "Quản lý người dùng",
     "settings": "Cài đặt",
     "user": "Người dùng",
-    "admin": "Quản trị viên"
+    "admin": "Quản trị viên",
+    "fail": "Thất bại",
+    "notice":"Thông báo"
   },
   "page": {
     "home": "Trang chủ",
@@ -43,7 +45,8 @@
     "lastName": "Họ",
     "oldPassword": "Mật khẩu cũ",
     "newPassword": "Mật khẩu mới",
-    "role": "Quyền"
+    "role": "Quyền",
+    "otp": "Nhập mã OTP"
   },
   "validator": {
     "required": "{{fieldName}} là bắt buộc",
@@ -69,8 +72,11 @@
     "register.success": "Tạo tài khoản thành công",
     "login.success": "Đăng nhập thành công",
     "changePassword.success": "Đổi mật khẩu thành công",
+    "resetPassword.success": "Cài lại khẩu thành công",
     "updateProfile.success": "Thay đổi thông tin thành công",
-    "deleteAccount.success": "Xóa tài khoản thành công"
+    "deleteAccount.success": "Xóa tài khoản thành công",
+    "forget_password": "Quên mật khẩu",
+    "reset_password": "Đặt lại mật khẩu"
   },
   "usernav": {
     "profile": "Tài khoản",
@@ -79,7 +85,10 @@
     "profile.desc": "Xem thông tin tài khoản",
     "changePassword.desc": "Bảo vệ tài khoản",
     "logout.desc": "Thoát tài khoản",
-    "settings": "Cài đặt"
+    "settings": "Cài đặt",
+    "forget_password": "Quên mật khẩu",
+    "reset_password":"Đặt lại mật khẩu",
+    "otp.info": "Mã OTP đã được gửi đến email tài khoản. Vui lòng kiểm tra"
   },
   "modal": {
     "logout.title": "Đăng xuất",
@@ -103,7 +112,6 @@
     "house.name": "Nhà",
     "notFound.route": "Không tìm thấy đường đi",
     "distance": "Khoảng cách: {{distance}} km"
-
   },
   "userList": {
     "create": "Thêm người dùng",
@@ -284,5 +292,5 @@
     "region": "vùng",
     "state": "bang",
     "suburb": "ngoại ô"
-    }
+  }
 }

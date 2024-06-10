@@ -21,3 +21,15 @@ export interface UpdateProfileDetail {
   firstName?: string;
   lastName?: string;
 }
+
+export interface ForgetPasswordDetail {
+  email: string;
+}
+
+export interface ValidateResetPasswordDetail {
+  otp: string;
+}
+
+export interface ResetPasswordDetail {
+  newPassword: string;
+}

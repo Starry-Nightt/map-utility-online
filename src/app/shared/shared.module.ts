@@ -6,6 +6,7 @@ import COMPONENTS from './components';
 import DIRECTIVES from './directives';
 import { RouterModule } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 @NgModule({
   declarations: [...COMPONENTS, ...DIRECTIVES],
@@ -16,6 +17,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     TranslateModule,
     RouterModule,
     NgxDatatableModule,
+    NgOtpInputModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -24,6 +26,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     ...COMPONENTS,
     TranslateModule,
     ...DIRECTIVES,
+    NgOtpInputModule,
   ],
 })
 export class SharedModule {}

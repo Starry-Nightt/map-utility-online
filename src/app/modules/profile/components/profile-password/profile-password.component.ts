@@ -50,7 +50,7 @@ export class ProfilePasswordComponent extends BaseComponent implements OnInit {
       (error) => {
         this.showError(
           this.trans('common.error'),
-          this.trans(error.error.message)
+          this.trans(error?.error?.message ?? 'common.request.error')
         );
       }
     );

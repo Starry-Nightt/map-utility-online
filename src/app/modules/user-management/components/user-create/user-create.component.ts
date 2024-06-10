@@ -62,7 +62,10 @@ export class UserCreateComponent extends BaseComponent implements OnInit {
         this.form.reset();
       },
       (error) => {
-        this.showError(this.trans('common.error'), error.error.message);
+        this.showError(
+          this.trans('common.error'),
+          this.trans(error?.error?.message ?? 'common.request.error')
+        );
       }
     );
   }

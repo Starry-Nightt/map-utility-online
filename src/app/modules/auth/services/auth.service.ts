@@ -3,9 +3,12 @@ import { ComponentService } from '@core/services/component.service';
 import { HttpService } from '@core/services/http.service';
 import {
   ChangePasswordDetail,
+  ForgetPasswordDetail,
   LoginDetail,
   RegisterDetail,
+  ResetPasswordDetail,
   UpdateProfileDetail,
+  ValidateResetPasswordDetail,
 } from '@shared/interfaces/auth.interface';
 import {
   LoginSuccessResponse,
@@ -23,6 +26,7 @@ export class AuthService {
   redirectUrl?: string = null;
   token?: string = null;
   currentUser?: UserInfo = null;
+  resetPasswordToken?: string = null;
 
   constructor(private http: HttpService, private service: ComponentService) {}
 
@@ -51,12 +55,30 @@ export class AuthService {
     return this.http.put(`/user/${this.currentUser.id}`, detail);
   }
 
-  deleteAccount(): Observable<void> {
+  deleteAccount(): Observable<SuccessResponse<void>> {
     return this.http.delete(`/user/${this.currentUser.id}`);
   }
 
   getCurrentUser(): Observable<SuccessResponse<UserInfo>> {
     return this.http.post('/auth/me');
+  }
+
+  forgetPassword(
+    detail: ForgetPasswordDetail
+  ): Observable<SuccessResponse<string>> {
+    return this.http.post('/auth/forget-password', detail);
+  }
+
+  validateOtp(
+    detail: ValidateResetPasswordDetail
+  ): Observable<SuccessResponse<void>> {
+    return this.http.post('/auth/validate-otp', detail);
+  }
+
+  resetPassword(
+    detail: ResetPasswordDetail
+  ): Observable<SuccessResponse<void>> {
+    return this.http.post('/auth/reset-password', detail);
   }
 
   logout(): Observable<SuccessResponse<void>> {
@@ -82,6 +104,14 @@ export class AuthService {
   removeToken() {
     this.token = null;
     this.service.storage.removeItem('token');
+  }
+
+  setResetPasswordToken(token: string) {
+    this.resetPasswordToken = token;
+  }
+
+  removeResetPasswordToken() {
+    this.resetPasswordToken = null;
   }
 
   get isAdmin(): boolean {

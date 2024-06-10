@@ -9,6 +9,7 @@ import {
   ListSuccessResponse,
   SuccessResponse,
 } from '@shared/interfaces/response';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-base',
@@ -80,6 +81,10 @@ export class BaseComponent {
 
   get translate(): TranslateService {
     return this.componentService.translate;
+  }
+
+  goBack() {
+    this.componentService.location.back();
   }
 
   ngOnDestroy(): void {

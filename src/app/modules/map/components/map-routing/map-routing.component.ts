@@ -135,7 +135,11 @@ export class MapRoutingComponent
         (err: any) => {
           if (err.error?.Message == "Column 'geom' is null.")
             this.showError(this.trans('map.notFound.route'));
-          else this.showError(this.trans('common.error'));
+          else
+            this.showError(
+              this.trans('common.error'),
+              this.trans(err?.error?.message ?? 'common.request.error')
+            );
         }
       );
   }

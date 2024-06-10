@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StorageService } from './storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class ComponentService {
     public activatedRoute: ActivatedRoute,
     public storage: StorageService,
     public translate: TranslateService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    public location: Location
   ) {}
 }

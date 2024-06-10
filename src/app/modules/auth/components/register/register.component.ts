@@ -52,7 +52,10 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         );
       },
       (error) => {
-        this.showError(this.trans('common.error'), error.error.message);
+        this.showError(
+          this.trans('common.error'),
+          this.trans(error?.error?.message ?? 'common.request.error')
+        );
       }
     );
   }

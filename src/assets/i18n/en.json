@@ -16,10 +16,14 @@
     "users": "Users",
     "settings": "Settings",
     "user": "User",
-    "admin": "Admin"
+    "admin": "Admin",
+    "fail": "Failed",
+    "notice":"Notice"
+
+
   },
   "page": {
-    "home":"Home",
+    "home": "Home",
     "about": "About",
     "userManagement": "User Management"
   },
@@ -43,8 +47,8 @@
     "lastName": "Last name",
     "oldPassword": "Old pasword",
     "newPassword": "New password",
-    "role": "Role"
-
+    "role": "Role",
+    "otp": "Enter OTP code"
   },
   "validator": {
     "required": "{{fieldName}} is required",
@@ -62,8 +66,7 @@
     "username": "example.user",
     "oldPassword": "Type your old pasword",
     "newPassword": "Type your new password",
-    "role": "Select role" 
-
+    "role": "Select role"
   },
   "auth": {
     "login": "Login",
@@ -73,8 +76,11 @@
     "register.success": "Register successfully",
     "login.success": "Login successfully",
     "changePassword.success": "Change password successfully",
+    "resetPassword.success": "Reset password successfully",
     "updateProfile.success": "Update profile successfully",
-    "deleteAccount.success": "Delete account successfully"
+    "deleteAccount.success": "Delete account successfully",
+    "forget_password": "Forget password",
+    "reset_password": "Reset password"
   },
   "usernav": {
     "profile": "Profile",
@@ -83,7 +89,10 @@
     "profile.desc": "Your account information",
     "changePassword.desc": "Security your account",
     "logout.desc": "Exit from your account",
-    "settings": "Settings"
+    "settings": "Settings",
+    "forget_password":"Forget password",
+    "reset_password":"Reset password",
+    "otp.info": "OTP code have been sent to account email. Please check"
   },
   "modal": {
     "logout.title": "Sign Out",
@@ -95,14 +104,14 @@
   },
   "map": {
     "locationUnable.title": "You have not granted location access",
-    "locationUnable.body": "Please allow location access in your browser"  ,
+    "locationUnable.body": "Please allow location access in your browser",
     "from": "From",
     "to": "To",
     "placeholder.from": "Starting location",
     "placeholder.to": "Destination",
     "location.from": "Starting location",
     "location.to": "Destination",
-    "location.user": "Your current location" ,
+    "location.user": "Your current location",
     "house.number": "Number",
     "house.name": "House",
     "notFound.route": "Not found route to destination",
@@ -116,7 +125,7 @@
     "lastName": "Last name",
     "email": "Email",
     "id": "ID",
-    "role":"Role",
+    "role": "Role",
     "create.user": "Create user"
   },
   "amenity": {
@@ -263,29 +272,29 @@
     "watering_place": "watering place",
     "wedding_organizer": "wedding organizer",
     "weighbridge": "weighbridge"
-    },
-    "place": {
-      "island": "island",
-      "islet": "islet",
-      "isolated_dwelling": "isolated dwelling",
-      "locality": "locality",
-      "Na Lãy": "Na Lãy",
-      "neighbourhood": "neighbourhood",
-      "plot": "plot",
-      "quarter": "quarter",
-      "square": "square",
-      "Suối Lở Ó": "Suối Lở Ó",
-      "town": "town",
-      "village": "village",
-      "city": "city",
-      "country": "country",
-      "county": "county",
-      "district": "district",
-      "economic_zone": "economic zone",
-      "farm": "farm",
-      "hamlet": "hamlet",
-      "region": "region",
-      "state": "state",
-      "suburb": "suburb"
-      }
+  },
+  "place": {
+    "island": "island",
+    "islet": "islet",
+    "isolated_dwelling": "isolated dwelling",
+    "locality": "locality",
+    "Na Lãy": "Na Lãy",
+    "neighbourhood": "neighbourhood",
+    "plot": "plot",
+    "quarter": "quarter",
+    "square": "square",
+    "Suối Lở Ó": "Suối Lở Ó",
+    "town": "town",
+    "village": "village",
+    "city": "city",
+    "country": "country",
+    "county": "county",
+    "district": "district",
+    "economic_zone": "economic zone",
+    "farm": "farm",
+    "hamlet": "hamlet",
+    "region": "region",
+    "state": "state",
+    "suburb": "suburb"
+  }
 }

@@ -5,9 +5,17 @@ import { AuthContainerComponent } from './components/auth-container/auth-contain
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CommonModule } from '@angular/common';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   imports: [AuthRoutingModule, SharedModule, CommonModule],
-  declarations: [AuthContainerComponent, LoginComponent, RegisterComponent],
+  declarations: [
+    AuthContainerComponent,
+    LoginComponent,
+    RegisterComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
+  ],
 })
 export class AuthModule {}

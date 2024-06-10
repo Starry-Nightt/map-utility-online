@@ -4,6 +4,8 @@ import { ProfileContainerComponent } from './components/profile-container/profil
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { ProfileUserComponent } from './components/profile-user/profile-user.component';
 import { ProfilePasswordComponent } from './components/profile-password/profile-password.component';
+import { ResetPasswordComponent } from '@modules/auth/components/reset-password/reset-password.component';
+import { ProfileResetPasswordComponent } from './components/profile-reset-password/profile-reset-password.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,10 @@ const routes: Routes = [
       {
         path: 'change-password',
         component: ProfilePasswordComponent,
+      },
+      {
+        path: 'reset-password',
+        component: ProfileResetPasswordComponent,
       },
       {
         path: 'settings',

@@ -22,6 +22,11 @@ export class ProfileContainerComponent extends BaseComponent implements OnInit {
       icon: 'fa-solid fa-key',
     },
     {
+      link: '/profile/reset-password',
+      label: 'usernav.forget_password',
+      icon: 'fa-solid fa-file-shield',
+    },
+    {
       link: '/profile/settings',
       label: 'usernav.settings',
       icon: 'fa-solid fa-gear',
