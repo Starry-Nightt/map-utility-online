@@ -292,5 +292,12 @@
     "region": "vùng",
     "state": "bang",
     "suburb": "ngoại ô"
+  },
+  "footer": {
+    "service": "Dịch vụ",
+    "vietnam": "Việt Nam",
+    "hanoi": "Hà Nội, Việt Nam",
+    "about": "Thông tin liên hệ",
+    "address": "Địa chỉ"
   }
 }

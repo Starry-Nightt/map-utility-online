@@ -254,5 +254,6 @@ export class MapRoutingComponent
 
   override ngOnDestroy(): void {
     this.routingSubscription?.unsubscribe();
+    this.loading = false;
   }
 }

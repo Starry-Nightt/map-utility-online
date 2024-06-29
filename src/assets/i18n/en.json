@@ -296,5 +296,13 @@
     "region": "region",
     "state": "state",
     "suburb": "suburb"
+  },
+  "footer": {
+    "service": "Services",
+    "vietnam": "Vietnam",
+    "hanoi": "Hanoi, Vietnam",
+    "about": "About",
+    "address": "Address"
+
   }
 }
