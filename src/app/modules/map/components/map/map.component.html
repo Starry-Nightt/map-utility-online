@@ -54,3 +54,48 @@
     </div>
   </div>
 </dialog>
+
+<dialog #layerInfoModal class="modal">
+  <div class="modal-box">
+    <figure
+      class="mb-4 rounded overflow-hidden h-80 w-full"
+      *ngIf="currentLayerInfo?.properties?.body?.image"
+    >
+      <img
+        [src]="currentLayerInfo?.properties?.body?.image"
+        alt="img"
+        class="object-cover object-center"
+      />
+    </figure>
+    <h3 class="text-lg font-bold">
+      {{
+        currentLayerInfo?.properties?.body?.title
+          ? currentLayerInfo?.properties.body.title
+          : ("common.empty" | translate)
+      }}
+    </h3>
+    <p class="py-4">
+      {{
+        currentLayerInfo?.properties?.body?.description
+          ? currentLayerInfo.properties.body.description
+          : ("common.empty" | translate)
+      }}
+    </p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">{{ "button.close" | translate }}</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<dialog #layerEditModal class="modal">
+  <div class="modal-box">
+    <app-map-edit-layer
+      *ngIf="currentLayerInfo"
+      [layer]="currentLayerInfo"
+      (submit)="onUpdateLayer($event)"
+      (close)="onCloseLayerEditModal()"
+    ></app-map-edit-layer>
+  </div>
+</dialog>

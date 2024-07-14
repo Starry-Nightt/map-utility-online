@@ -16,6 +16,7 @@ import {
   Coordinates,
   CustomTileLayer,
   GeoJSONData,
+  LayerBody,
   LocationData,
   RoutingData,
 } from '@shared/interfaces/map.interface';
@@ -49,9 +50,13 @@ export class MapComponent
   directedRoute: L.GeoJSON;
   viewZoomDefault: number = 12;
   currentZoom: number;
+  currentLayerInfo: GeoJSONData;
 
   @ViewChild('map') mapElement: ElementRef<HTMLDivElement>;
   @ViewChild('clearModal') clearModal: ElementRef;
+  @ViewChild('layerInfoModal') layerInfoModal: ElementRef;
+  @ViewChild('layerEditModal') layerEditModal: ElementRef;
+
   constructor(
     service: ComponentService,
     private mapService: MapService,
@@ -69,7 +74,7 @@ export class MapComponent
     this.initMap();
     this.addControls();
     this.listenCreateLayer();
-    this.listenDeleteLayer();
+    this.listenPopupEvent();
     this.loadLayer();
     this.listenZoom();
     this.listenOnClickMap();
@@ -127,20 +132,31 @@ export class MapComponent
     delete geoJsonData.id;
     delete geoJsonData.userId;
     let createdLayer: L.GeoJSON;
+
+    const getPopupContent = (dataId) => {
+      return `
+        <div class="flex gap-3">
+          <button class="info-button btn btn-info" data-id=${dataId}><i class="fa-solid fa-circle-info"></i></button>
+          <button class="edit-button btn btn-warning" data-id=${dataId}><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete-button btn btn-error" data-id=${dataId}><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+    };
+
     if (geoJsonData.properties?.radius) {
       createdLayer = L.geoJSON(geoJsonData as any, {
         pointToLayer: (feature, latlng) => {
           return new L.Circle(latlng, feature.properties.radius);
         },
         onEachFeature: function (feature, layer) {
-          const popupContent = `<button class="delete-button btn" data-id=${feature.properties.id}>Remove</button>`;
+          const popupContent = getPopupContent(feature.properties.id);
           layer.bindPopup(popupContent);
         },
       });
     } else {
       createdLayer = L.geoJSON(geoJsonData as any, {
         onEachFeature: function (feature, layer) {
-          const popupContent = `<button class="delete-button btn" data-id=${feature.properties.id}>Remove</button>`;
+          const popupContent = getPopupContent(feature.properties.id);
           layer.bindPopup(popupContent);
         },
       });
@@ -151,6 +167,7 @@ export class MapComponent
   loadLayer() {
     this.subscribeUntilDestroy(this.mapService.getLayer(), (res) => {
       this.data = res.data as GeoJSONData[];
+
       const layers = this.data.map((it) => {
         return this.generateLayer(it);
       });
@@ -183,7 +200,7 @@ export class MapComponent
     });
   }
 
-  listenDeleteLayer() {
+  listenPopupEvent() {
     this.map.on('popupopen', (event: L.PopupEvent) => {
       const deleteButton = document.querySelector('.delete-button');
       if (deleteButton) {
@@ -214,11 +231,47 @@ export class MapComponent
           this.searchMarker.remove();
         });
       }
+
+      const viewLayerInfoButton = document.querySelector('.info-button');
+      if (viewLayerInfoButton) {
+        const layerId = viewLayerInfoButton.getAttribute('data-id');
+        const layerData = this.data.find((it) => it.properties.id === layerId);
+        viewLayerInfoButton.addEventListener('click', () => {
+          this.currentLayerInfo = layerData;
+          this.onOpenLayerInfoModal();
+        });
+      }
+
+      const editLayerInfoButton = document.querySelector('.edit-button');
+      if (editLayerInfoButton) {
+        const layerId = viewLayerInfoButton.getAttribute('data-id');
+        const layerData = this.data.find((it) => it.properties.id === layerId);
+        editLayerInfoButton.addEventListener('click', () => {
+          this.currentLayerInfo = layerData;
+          this.onOpenLayerEditModal();
+        });
+      }
+    });
+
+    this.map.on('popupclose', () => {
+      this.currentLayerInfo = null;
     });
   }
 
   onOpenClearLayerModal() {
     this.clearModal.nativeElement.showModal();
+  }
+
+  onOpenLayerInfoModal() {
+    this.layerInfoModal.nativeElement.showModal();
+  }
+
+  onOpenLayerEditModal() {
+    this.layerEditModal.nativeElement.showModal();
+  }
+
+  onCloseLayerEditModal() {
+    this.layerEditModal.nativeElement.close();
   }
 
   clearLayer() {
@@ -248,7 +301,7 @@ export class MapComponent
 
   searchLocation(coordinate: Coordinates) {
     this.map.setView([coordinate.lat, coordinate.lng], this.viewZoomDefault);
-    const popupContent = `<button class="delete-search-marker-button btn">Remove</button>`;
+    const popupContent = `<button class="delete-search-marker-button btn btn-error"><i class="fa-solid fa-trash"></i></button>`;
     this.searchMarker
       .setLatLng([coordinate.lat, coordinate.lng])
       .bindPopup(popupContent)
@@ -354,5 +407,25 @@ export class MapComponent
     if (this.directedRoute != null) this.map.removeLayer(this.directedRoute);
     if (!this.fromMarker) this.map.removeLayer(this.fromMarker);
     if (!this.toMarker) this.map.removeLayer(this.toMarker);
+  }
+
+  onUpdateLayer(event: GeoJSONData) {
+    this.subscribeUntilDestroy(
+      this.mapService.updateLayer(
+        event.properties.id,
+        event.properties.body as LayerBody
+      ),
+      () => {
+        this.loadLayer();
+        this.showSuccess(this.trans('common.success'));
+        this.onCloseLayerEditModal();
+      },
+      () => {
+        this.showError(
+          this.trans('common.error'),
+          this.trans('common.request.error')
+        );
+      }
+    );
   }
 }

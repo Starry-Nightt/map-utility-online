@@ -18,7 +18,11 @@
     "user": "Người dùng",
     "admin": "Quản trị viên",
     "fail": "Thất bại",
-    "notice":"Thông báo"
+    "notice": "Thông báo",
+    "empty": "Trống",
+    "titleText": "Tiêu đề",
+    "descriptionText": "Mô tả",
+    "upload": "Chọn tệp"
   },
   "page": {
     "home": "Trang chủ",
@@ -34,7 +38,8 @@
     "changePassword": "Đổi",
     "deleteAccount": "Xóa tài khoản",
     "remove": "Xóa",
-    "clear": "Làm mới"
+    "clear": "Làm mới",
+    "close": "Đóng"
   },
   "field": {
     "username": "Tên đăng nhập",
@@ -46,7 +51,10 @@
     "oldPassword": "Mật khẩu cũ",
     "newPassword": "Mật khẩu mới",
     "role": "Quyền",
-    "otp": "Nhập mã OTP"
+    "otp": "Nhập mã OTP",
+    "title": "Tiêu đề",
+    "description": "Mô tả",
+    "image": "Hình ảnh"
   },
   "validator": {
     "required": "{{fieldName}} là bắt buộc",
@@ -62,7 +70,10 @@
     "firstName": "Paul",
     "lastName": "Allen",
     "username": "example.user",
-    "role": "Chọn quyền"
+    "role": "Chọn quyền",
+    "title": "Nhập tiêu đề",
+    "description": "Nhập mô tả",
+    "image": "Chọn hình ảnh"
   },
   "auth": {
     "login": "Đăng nhập",
@@ -87,7 +98,7 @@
     "logout.desc": "Thoát tài khoản",
     "settings": "Cài đặt",
     "forget_password": "Quên mật khẩu",
-    "reset_password":"Đặt lại mật khẩu",
+    "reset_password": "Đặt lại mật khẩu",
     "otp.info": "Mã OTP đã được gửi đến email tài khoản. Vui lòng kiểm tra"
   },
   "modal": {
@@ -96,7 +107,8 @@
     "deleteAccount.title": "Xóa tài khoản",
     "deleteAccount.body": "Bạn có chắc muốn xóa tài khoản",
     "clear.title": "Làm mới bản đồ",
-    "clear.body": "Bạn có chắc muốn xóa dữ liệu đánh dấu bản đồ"
+    "clear.body": "Bạn có chắc muốn xóa dữ liệu đánh dấu bản đồ",
+    "layerInfo": "Thông tin địa điểm"
   },
   "map": {
     "locationUnable.title": "Chưa có quyền truy cập vị trí",

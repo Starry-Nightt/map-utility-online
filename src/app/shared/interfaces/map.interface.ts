@@ -83,3 +83,9 @@ export interface RoutingData {
   };
   distance: number;
 }
+
+export interface LayerBody {
+  title?: string;
+  description?: string;
+  image?: string;
+}

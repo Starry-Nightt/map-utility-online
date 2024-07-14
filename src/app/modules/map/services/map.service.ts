@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@core/services/http.service';
 import {
   GeoJSONData,
+  LayerBody,
   LocationData,
   RoutingData,
   RoutingDetail,
@@ -34,6 +35,10 @@ export class MapService {
 
   clearLayer(): Observable<void> {
     return this.http.delete(`/map/clear/${this.authService.currentUser.id}`);
+  }
+
+  updateLayer(id: string, body: LayerBody): Observable<void> {
+    return this.http.put(`/map/${id}`, body);
   }
 
   getLocation(key: string): Observable<SuccessResponse<LocationData[]>> {

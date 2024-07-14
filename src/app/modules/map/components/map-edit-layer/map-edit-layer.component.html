@@ -1,0 +1,57 @@
+<form [formGroup]="form">
+  <div
+    #imagePreview
+    class="w-full p-6 mb-4 bg-gray-100 border-dashed border-2 border-gray-400 rounded-lg items-center mx-auto text-center cursor-pointer"
+  >
+    <input
+      id="upload"
+      type="file"
+      class="hidden"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      #fileUpload
+    />
+    <div *ngIf="!imageBase64">
+      <label for="upload" class="cursor-pointer">
+        <i
+          class="fa-solid fa-arrow-up-from-bracket text-3xl text-gray-700 mx-auto mb-4"
+        ></i>
+        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-700">
+          {{ "common.upload" | translate }}
+        </h5>
+      </label>
+    </div>
+    <div *ngIf="imageBase64">
+      <img
+        [src]="imageBase64"
+        alt=""
+        class="w-full"
+        (click)="onChangeImage()"
+      />
+    </div>
+  </div>
+  <div class="label">
+    <input
+      type="text"
+      [placeholder]="'placeholder.title' | translate"
+      class="input input-bordered w-full"
+      formControlName="title"
+    />
+  </div>
+  <div class="label">
+    <textarea
+      class="textarea textarea-bordered w-full"
+      [placeholder]="'placeholder.description' | translate"
+      [rows]="4"
+      formControlName="description"
+    ></textarea>
+  </div>
+</form>
+<div class="flex justify-end mt-5">
+  <button class="btn btn-warning mr-4" (click)="onUpdate()">
+    {{ "button.save" | translate }}
+  </button>
+  <button class="btn" (click)="onClose()">
+    {{ "button.cancel" | translate }}
+  </button>
+</div>

@@ -18,8 +18,9 @@
     "user": "User",
     "admin": "Admin",
     "fail": "Failed",
-    "notice":"Notice"
-
+    "notice":"Notice",
+    "empty": "Empty",
+    "upload": "Upload"
 
   },
   "page": {
@@ -36,7 +37,9 @@
     "changePassword": "Change password",
     "deleteAccount": "Delete Account",
     "remove": "Remove",
-    "clear": "Clear"
+    "clear": "Clear",
+    "close": "Close"
+
   },
   "field": {
     "username": "Username",
@@ -48,7 +51,10 @@
     "oldPassword": "Old pasword",
     "newPassword": "New password",
     "role": "Role",
-    "otp": "Enter OTP code"
+    "otp": "Enter OTP code",
+    "title": "Title",
+    "description": "Description",
+    "image": "Image"
   },
   "validator": {
     "required": "{{fieldName}} is required",
@@ -66,7 +72,10 @@
     "username": "example.user",
     "oldPassword": "Type your old pasword",
     "newPassword": "Type your new password",
-    "role": "Select role"
+    "role": "Select role",
+    "title": "Type title",
+    "description": "Type description",
+    "image": "Select image"
   },
   "auth": {
     "login": "Login",
@@ -100,7 +109,8 @@
     "deleteAccount.title": "Delete account",
     "deleteAccount.body": "Are you sure that you want to delete account",
     "clear.title": "Reset geo data",
-    "clear.body": "Are you sure that you want to clear all geo data"
+    "clear.body": "Are you sure that you want to clear all geo data",
+    "layerInfo": "Location information"
   },
   "map": {
     "locationUnable.title": "You have not granted location access",
