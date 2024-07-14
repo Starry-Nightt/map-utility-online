@@ -48,6 +48,7 @@ export class MapComponent
   toMarker: L.Marker;
   directedRoute: L.GeoJSON;
   viewZoomDefault: number = 12;
+  currentZoom: number;
 
   @ViewChild('map') mapElement: ElementRef<HTMLDivElement>;
   @ViewChild('clearModal') clearModal: ElementRef;
@@ -70,6 +71,7 @@ export class MapComponent
     this.listenCreateLayer();
     this.listenDeleteLayer();
     this.loadLayer();
+    this.listenZoom();
     this.listenOnClickMap();
     this.subscribeUntilDestroy(timer(100), () => {
       this.scrollIntoView();
@@ -109,6 +111,12 @@ export class MapComponent
     });
 
     this.drawControl.addTo(this.map);
+  }
+
+  listenZoom() {
+    this.map.on('zoom', (event) => {
+      this.currentZoom = event.target._zoom;
+    });
   }
 
   generateLayer(data: GeoJSONData): L.Layer {
@@ -178,23 +186,34 @@ export class MapComponent
   listenDeleteLayer() {
     this.map.on('popupopen', (event: L.PopupEvent) => {
       const deleteButton = document.querySelector('.delete-button');
-      if (!deleteButton) return;
-      const layerId = deleteButton.getAttribute('data-id');
-      deleteButton.addEventListener('click', () => {
-        this.subscribeUntilDestroy(
-          this.mapService.deleteLayer(layerId),
-          () => {
-            this.data = this.data.filter((it) => it.properties.id !== layerId);
-            this.map.removeLayer((event.popup as any)._source);
-          },
-          () => {
-            this.showError(
-              this.trans('common.error'),
-              this.trans('common.request.error')
-            );
-          }
-        );
-      });
+      if (deleteButton) {
+        const layerId = deleteButton.getAttribute('data-id');
+        deleteButton.addEventListener('click', () => {
+          this.subscribeUntilDestroy(
+            this.mapService.deleteLayer(layerId),
+            () => {
+              this.data = this.data.filter(
+                (it) => it.properties.id !== layerId
+              );
+              this.map.removeLayer((event.popup as any)._source);
+            },
+            () => {
+              this.showError(
+                this.trans('common.error'),
+                this.trans('common.request.error')
+              );
+            }
+          );
+        });
+      }
+      const deleteSearchMarkerButton = document.querySelector(
+        '.delete-search-marker-button'
+      );
+      if (deleteSearchMarkerButton) {
+        deleteSearchMarkerButton.addEventListener('click', () => {
+          this.searchMarker.remove();
+        });
+      }
     });
   }
 
@@ -229,8 +248,11 @@ export class MapComponent
 
   searchLocation(coordinate: Coordinates) {
     this.map.setView([coordinate.lat, coordinate.lng], this.viewZoomDefault);
-    this.searchMarker.setLatLng([coordinate.lat, coordinate.lng]);
-    this.searchMarker.addTo(this.map);
+    const popupContent = `<button class="delete-search-marker-button btn">Remove</button>`;
+    this.searchMarker
+      .setLatLng([coordinate.lat, coordinate.lng])
+      .bindPopup(popupContent)
+      .addTo(this.map);
   }
 
   viewCurrentLocation() {
@@ -251,10 +273,16 @@ export class MapComponent
 
   addFromMarker(location: LocationData) {
     if (location && location.lat && location.lng) {
+      if (this.fromMarker) {
+        this.fromMarker.remove();
+      }
       this.fromMarker = L.marker([Number(location.lat), Number(location.lng)])
         .bindPopup(`<b>${this.trans('map.location.from')}</b>`)
         .addTo(this.map);
-      this.map.setView([Number(location.lat), Number(location.lng)]);
+      this.map.setView(
+        [Number(location.lat), Number(location.lng)],
+        this.currentZoom ?? this.viewZoomDefault
+      );
     } else {
       this.map.removeLayer(this.fromMarker);
     }
@@ -262,10 +290,16 @@ export class MapComponent
 
   addToMarker(location: LocationData) {
     if (location && location.lat && location.lng) {
+      if (this.toMarker) {
+        this.toMarker.remove();
+      }
       this.toMarker = L.marker([Number(location.lat), Number(location.lng)])
         .bindPopup(`<b>${this.trans('map.location.to')}</b>`)
         .addTo(this.map);
-      this.map.setView([Number(location.lat), Number(location.lng)]);
+      this.map.setView(
+        [Number(location.lat), Number(location.lng)],
+        this.currentZoom ?? this.viewZoomDefault
+      );
     } else {
       this.map.removeLayer(this.toMarker);
     }
